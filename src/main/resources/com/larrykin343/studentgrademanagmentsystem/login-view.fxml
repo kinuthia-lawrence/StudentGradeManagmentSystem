@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" spacing="20.0"
+      fx:controller="com.larrykin343.studentgrademanagmentsystem.LoginController" style="-fx-background-color: #0072C6;">
+    <padding>
+        <Insets bottom="10.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <ImageView fitWidth="100.0" fitHeight="100.0" preserveRatio="true">
+        <Image url="@logo.png"/>
+    </ImageView>
+
+    <VBox alignment="CENTER" spacing="20.0">
+        <TextField fx:id="usernameField" promptText="Username" style="-fx-background-color: #FFC107;"/>
+        <PasswordField fx:id="passwordField" promptText="Password" style="-fx-background-color: #FFC107;"/>
+        <Button text="Login" onAction="#onLoginButtonClick" style="-fx-background-color: #FFC107;"/>
+    </VBox>
+
+    <Label text="© 2024 Larrykin343 All Rights Reserved" style="-fx-text-fill: #FFC107;"/>
+
+</VBox>

@@ -134,7 +134,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.larrykin343.studentgrademanagmentsystem/com.larrykin343.studentgrademanagmentsystem.HelloApplication
+                                com.larrykin343.studentgrademanagmentsystem/com.larrykin343.studentgrademanagmentsystem.GradeApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
