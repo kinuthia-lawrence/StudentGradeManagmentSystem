@@ -1,12 +1,19 @@
 package com.larrykin343.studentgrademanagmentsystem.Controller;
 
+import com.larrykin343.studentgrademanagmentsystem.DatabaseConn;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class LoginController {
     @FXML
@@ -20,17 +27,69 @@ public class LoginController {
     @FXML
     public Button cancelButton;
 
-    public void loginButtonOnAction(ActionEvent event) {
-        System.out.println("Login button clicked");
-
-    }
-
-
     public void cancelButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
 
     }
 
+    public void loginButtonOnAction(ActionEvent event) {
 
+        if (!UsernameTextField.getText().isBlank() && !passwordTextField.getText().isBlank()) {
+            checkLoginCredentials();
+        } else {
+            invalidLoginsLabel.setText("Please enter your username and password !!!");
+        }
+
+    }
+
+    //TODO: check if the login credentials are correct
+    //if the login credentials are correct, the user will be taken to the main application
+    //if the login credentials are incorrect, the user will be prompted to enter the correct login credentials
+    private void checkLoginCredentials() {
+        DatabaseConn connectNow = new DatabaseConn();//Creating an instance of the DatabaseConn class
+        Connection connectDB = connectNow.getConnection(); //this is the connection to the database
+
+        //taking the user inputs
+        String username = UsernameTextField.getText();
+        String password = passwordTextField.getText();
+
+        //this is the query to check if the login credentials are correct
+        String verifyLogin = "SELECT count(1) FROM admin_account WHERE username = '" + username + "' AND password = '" + password + "'";
+        try {
+            Statement statement = connectDB.createStatement();//creating a statement
+            ResultSet queryResult = statement.executeQuery(verifyLogin);//executing the query
+
+            //the queryResult will return a 1 if the login credentials are correct and a 0 if the login credentials are incorrect
+            while (queryResult.next()) {
+                if (queryResult.getInt(1) == 1) {
+                    invalidLoginsLabel.setText("Login Successful");
+                    mainApplication();
+                    Stage stage = (Stage) loginButton.getScene().getWindow();
+                    stage.close();
+                } else {
+                    invalidLoginsLabel.setText("Invalid Login. Please try again.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    private void mainApplication() {
+        try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/MainApplication.fxml"));
+        Stage mainApplicationStage = new Stage();
+        Scene scene = new Scene(fxmlLoader.load());
+        mainApplicationStage.setScene(scene);
+        mainApplicationStage.setTitle("Student Grade Management System");
+        mainApplicationStage.show();
+        Stage stage = (Stage) loginButton.getScene().getWindow();
+        stage.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
 }

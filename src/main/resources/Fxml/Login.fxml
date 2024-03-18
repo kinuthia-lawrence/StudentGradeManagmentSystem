@@ -69,7 +69,7 @@
                   <Font name="Segoe Print" size="15.0" />
                </font>
             </Button>
-            <Label fx:id="invalidLoginsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="97.0" prefHeight="35.0" prefWidth="400.0" text="Invalid Logins!!‼️❗" textFill="#f20808" AnchorPane.bottomAnchor="268.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="-9.0" AnchorPane.topAnchor="97.0">
+            <Label fx:id="invalidLoginsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="97.0" prefHeight="35.0" prefWidth="400.0" textFill="#f20808" AnchorPane.bottomAnchor="268.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="-9.0" AnchorPane.topAnchor="97.0">
                <font>
                   <Font name="Segoe Print" size="14.0" />
                </font>
