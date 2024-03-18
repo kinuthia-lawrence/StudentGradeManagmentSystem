@@ -2,6 +2,8 @@ module com.larrykin.studentgrademanagmentsystem {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires javafx.graphics;
+    requires java.sql;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -13,4 +15,5 @@ module com.larrykin.studentgrademanagmentsystem {
 
     opens com.larrykin343.studentgrademanagmentsystem to javafx.fxml;
     exports com.larrykin343.studentgrademanagmentsystem;
+    exports com.larrykin343.studentgrademanagmentsystem.Controller;
 }
