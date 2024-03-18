@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -27,6 +30,7 @@ public class LoginController {
     @FXML
     public Button cancelButton;
 
+
     public void cancelButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
@@ -34,13 +38,15 @@ public class LoginController {
     }
 
     public void loginButtonOnAction(ActionEvent event) {
-
         if (!UsernameTextField.getText().isBlank() && !passwordTextField.getText().isBlank()) {
             checkLoginCredentials();
         } else {
             invalidLoginsLabel.setText("Please enter your username and password !!!");
         }
 
+        // Set accelerator for login button (Shift+E)
+        KeyCombination keyCombination = new KeyCodeCombination(KeyCode.E, KeyCombination.SHIFT_DOWN);
+        loginButton.getScene().getAccelerators().put(keyCombination, () -> mainApplication());
     }
 
     //TODO: check if the login credentials are correct
