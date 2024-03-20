@@ -15,6 +15,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -42,7 +43,7 @@
                   <Font name="Segoe Print" size="12.0" />
                </font>
             </Label>
-            <Button alignment="CENTER" layoutX="595.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #ff7f5a;" text="Logout" textFill="#f8f4f4" />
+            <Button fx:id="logoutMainApplicationButton" alignment="CENTER" layoutX="595.0" layoutY="2.0" mnemonicParsing="false" onAction="#logoutMainApplication" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #ff7f5a;" text="Logout" textFill="#f8f4f4" />
          </children></AnchorPane>
    </bottom>
    <top>
@@ -51,21 +52,30 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" text="Open Course" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Save" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Exit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
               <MenuItem mnemonicParsing="false" text="Add Student" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Edit Student" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Remove Student" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="View Menu">
               <items>
                 <MenuItem mnemonicParsing="false" text="Student List" />
-                  <MenuItem mnemonicParsing="false" text="Grade Report" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem id="gradeRep" fx:id="gradeReportMenu" mnemonicParsing="false" onAction="#gradeReport" text="Grade Report">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="G" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Attendance Report" />
               </items>
             </Menu>
@@ -82,7 +92,7 @@
    <left>
       <SplitPane orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" style="-fx-background-color: #d3d3d3;" BorderPane.alignment="CENTER">
          <items>
-            <TreeView fx:id="leftTreeView" prefHeight="306.0" prefWidth="136.0" style="-fx-background-color: #d3d3d3;" />
+            <TreeView fx:id="leftTreeView" onContextMenuRequested="#mouseClicked" onMouseClicked="#mouseClicked" prefHeight="306.0" prefWidth="136.0" style="-fx-background-color: #d3d3d3;" />
          </items>
       </SplitPane>
    </left>
