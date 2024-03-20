@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -65,23 +66,30 @@ public class MainApplicationController implements Initializable {
     }
 
     public void logoutMainApplication(ActionEvent event) {
-        try {
-            Stage stage =new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Login.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setScene(scene);
-            stage.setTitle("Student Grade Management System");
-            Image icon = new Image(getClass().getResourceAsStream("/Images/digitalLibrary.png"));
-            stage.getIcons().add(icon);
-            stage.show();
-            Stage mainApplicationStage = (Stage) logoutMainApplicationButton.getScene().getWindow();
-            mainApplicationStage.close();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("Are you sure you want to logout?: ");
+        alert.setContentText("Press OK to confirm, or Cancel to go back.");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
+        if (alert.showAndWait().get().getText().equals("OK")) {
+            try {
+                Stage stage =new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Login.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.setTitle("Student Grade Management System");
+                Image icon = new Image(getClass().getResourceAsStream("/Images/digitalLibrary.png"));
+                stage.getIcons().add(icon);
+                stage.show();
+                Stage mainApplicationStage = (Stage) logoutMainApplicationButton.getScene().getWindow();
+                mainApplicationStage.close();
 
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause();
+
+            }
         }
     }
 }
