@@ -1,6 +1,6 @@
 package com.larrykin343.studentgrademanagmentsystem.Controller;
 
-import com.larrykin343.studentgrademanagmentsystem.DatabaseConn;
+import com.larrykin343.studentgrademanagmentsystem.Utils.DatabaseConn;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -45,9 +46,9 @@ public class LoginController {
             invalidLoginsLabel.setText("Please enter your username and password !!!");
         }
 
-        // Set accelerator for login button (Shift+E)
+        //! Set accelerator for login button (Shift+E)
         KeyCombination keyCombination = new KeyCodeCombination(KeyCode.E, KeyCombination.SHIFT_DOWN);
-        loginButton.getScene().getAccelerators().put(keyCombination, () -> mainApplication());
+        loginButton.getScene().getAccelerators().put(keyCombination, this::mainApplication);
     }
 
     //TODO: check if the login credentials are correct
@@ -57,17 +58,19 @@ public class LoginController {
         DatabaseConn connectNow = new DatabaseConn();//Creating an instance of the DatabaseConn class
         Connection connectDB = connectNow.getConnection(); //this is the connection to the database
 
-        //taking the user inputs
+        //!taking the user inputs
         String username = UsernameTextField.getText();
         String password = passwordTextField.getText();
 
-        //this is the query to check if the login credentials are correct
-        String verifyLogin = "SELECT count(1) FROM admin_account WHERE username = '" + username + "' AND password = '" + password + "'";
+        //!this is the query to check if the login credentials are correct
+        String verifyLogin = "SELECT count(1) FROM admin_account WHERE username = '" +
+                username + "' AND password = '" + password + "'";
         try {
             Statement statement = connectDB.createStatement();//creating a statement
             ResultSet queryResult = statement.executeQuery(verifyLogin);//executing the query
 
-            //the queryResult will return a 1 if the login credentials are correct and a 0 if the login credentials are incorrect
+            //? the queryResult will return a 1 if the login credentials are correct
+            //? and a 0 if the login credentials are incorrect
             while (queryResult.next()) {
                 if (queryResult.getInt(1) == 1) {
                     invalidLoginsLabel.setText("Login Successful");
@@ -86,7 +89,7 @@ public class LoginController {
 
     private void mainApplication() {
         try {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/MainApplication.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Dashboard.fxml"));
         Stage mainApplicationStage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
         mainApplicationStage.setScene(scene);
@@ -95,6 +98,7 @@ public class LoginController {
         mainApplicationStage.getIcons().add(icon);
         mainApplicationStage.show();
         Stage stage = (Stage) loginButton.getScene().getWindow();
+        stage.initStyle(StageStyle.UTILITY);
         stage.close();
         } catch (Exception e) {
             e.printStackTrace();

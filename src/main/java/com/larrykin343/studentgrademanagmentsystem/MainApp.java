@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.util.Objects;
+
 public class MainApp extends Application {
 
 
@@ -17,7 +19,7 @@ public class MainApp extends Application {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.setTitle("Student Grade Management System");
-        Image icon = new Image(getClass().getResourceAsStream("/Images/digitalLibrary.png"));
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/digitalLibrary.png")));
         stage.getIcons().add(icon);
         stage.show();
     }

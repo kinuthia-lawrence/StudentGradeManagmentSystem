@@ -1,4 +1,4 @@
-package com.larrykin343.studentgrademanagmentsystem;
+package com.larrykin343.studentgrademanagmentsystem.Utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

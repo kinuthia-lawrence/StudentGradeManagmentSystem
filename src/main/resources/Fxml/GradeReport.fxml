@@ -16,40 +16,47 @@
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.larrykin343.studentgrademanagmentsystem.Controller.GradeReportController">
-   <children>
-      <Label alignment="CENTER" layoutY="14.0" prefHeight="43.0" prefWidth="600.0" text="Grade Report" AnchorPane.bottomAnchor="352.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
-         <font>
-            <Font name="Segoe Print" size="18.0" />
-         </font>
-      </Label>
-      <Button layoutX="495.0" layoutY="361.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="90.0" style="-fx-background-color: #ff7f5a;" text="Export" textFill="#ebe7e7" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="495.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="361.0" />
-      <Button layoutX="380.0" layoutY="361.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="90.0" style="-fx-background-color: #ff7f5a;" text="Close" textFill="#ebe7e7" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="361.0" />
-      <SplitPane dividerPositions="0.2922077922077922" layoutX="2.0" layoutY="29.0" orientation="VERTICAL" prefHeight="310.0" prefWidth="600.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+    <Label alignment="CENTER" layoutY="14.0" prefHeight="43.0" prefWidth="600.0" text="Grade Report"
+           AnchorPane.bottomAnchor="352.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+           AnchorPane.topAnchor="5.0">
+        <font>
+            <Font name="Segoe Print" size="18.0"/>
+        </font>
+    </Label>
+    <Button layoutX="495.0" layoutY="361.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="90.0"
+            style="-fx-background-color: #ff7f5a;" text="Export" textFill="#ebe7e7" AnchorPane.bottomAnchor="5.0"
+            AnchorPane.leftAnchor="495.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="361.0"/>
+    <Button layoutX="380.0" layoutY="361.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="90.0"
+            style="-fx-background-color: #ff7f5a;" text="Close" textFill="#ebe7e7" AnchorPane.bottomAnchor="5.0"
+            AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="361.0"/>
+    <SplitPane dividerPositions="0.2922077922077922" layoutX="2.0" layoutY="29.0" orientation="VERTICAL"
+               prefHeight="310.0" prefWidth="600.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="97.0" prefWidth="598.0">
-               <children>
-                  <TableView layoutX="41.0" layoutY="6.0" prefHeight="78.0" prefWidth="464.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="Studnet" />
-                      <TableColumn prefWidth="75.0" text="Course" />
-                        <TableColumn prefWidth="75.0" text="Grade" />
-                    </columns>
-                  </TableView>
-               </children>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="97.0" prefWidth="598.0">
+                <children>
+                    <TableView layoutX="41.0" layoutY="6.0" prefHeight="78.0" prefWidth="464.0">
+                        <columns>
+                            <TableColumn prefWidth="75.0" text="Studnet"/>
+                            <TableColumn prefWidth="75.0" text="Course"/>
+                            <TableColumn prefWidth="75.0" text="Grade"/>
+                        </columns>
+                    </TableView>
+                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="156.0" prefWidth="598.0" style="-fx-background-color: #d3d3d3;">
-               <children>
-                  <BarChart layoutX="69.0" layoutY="11.0" prefHeight="182.0" prefWidth="368.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </BarChart>
-               </children>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="156.0" prefWidth="598.0"
+                        style="-fx-background-color: #d3d3d3;">
+                <children>
+                    <BarChart layoutX="69.0" layoutY="11.0" prefHeight="182.0" prefWidth="368.0">
+                        <xAxis>
+                            <CategoryAxis side="BOTTOM"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis side="LEFT"/>
+                        </yAxis>
+                    </BarChart>
+                </children>
             </AnchorPane>
         </items>
-      </SplitPane>
-   </children>
+    </SplitPane>
 </AnchorPane>
