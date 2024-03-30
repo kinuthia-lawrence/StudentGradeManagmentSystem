@@ -65,16 +65,16 @@ public class DashboardController implements Initializable {
                 String studentID = resultSet.getString("id");
                 String studentReg = resultSet.getString("reg");
                 String studentName = resultSet.getString("name");
+                String studentId = resultSet.getString("student_id");
+                String email = resultSet.getString("email");
 
-                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName;
+                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName+ "  " +studentId+ "  " +email;
                 dashboardListView.getItems().add(studentListOutput);
             }
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
         }
-
-
     }
 
     //!method to handle the mouse click event when the tree item is clicked
@@ -197,6 +197,8 @@ public class DashboardController implements Initializable {
                 timeline.play();
 
                 successAlert.showAndWait();
+                //?Updating the listview
+                updateStudentList();
             } else {
                 studentInfoLabel.setText("");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -208,6 +210,31 @@ public class DashboardController implements Initializable {
         } catch (SQLException ex) {
             ex.printStackTrace();
             ex.getCause();
+        }
+    }
+
+    private void updateStudentList() {
+        dashboardListView.getItems().clear();
+        DatabaseConn connectNow = new DatabaseConn();//Creating an instance of the DatabaseConn class
+        Connection connectDB = connectNow.getConnection(); //this is the connection to the database
+
+        try {
+            String studentList = "SELECT * FROM students";
+            Statement statement = connectDB.createStatement();// creating a statement
+            ResultSet resultSet = statement.executeQuery(studentList);//executing the query
+            while (resultSet.next()) {
+                String studentID = resultSet.getString("id");
+                String studentReg = resultSet.getString("reg");
+                String studentName = resultSet.getString("name");
+                String studentId = resultSet.getString("student_id");
+                String email = resultSet.getString("email");
+
+                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName+ "  " +studentId+ "  " +email;
+                dashboardListView.getItems().add(studentListOutput);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
         }
     }
 
