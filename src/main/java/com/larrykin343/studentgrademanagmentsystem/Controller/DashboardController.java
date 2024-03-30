@@ -45,13 +45,13 @@ public class DashboardController implements Initializable {
         TreeItem<String> branchItem = new TreeItem<>("Students");
         TreeItem<String> branchItem2 = new TreeItem<>("Courses");
 
-        TreeItem<String> leafItem = new TreeItem<>("//:TODO: Add Students");
-        branchItem.getChildren().addAll(leafItem);
+
         TreeItem<String> leafItem2 = new TreeItem<>("//:TODO: Add Courses");
         branchItem2.getChildren().addAll(leafItem2);
         rootItem.getChildren().addAll(branchItem, branchItem2);
         leftTreeView.setShowRoot(false);
         leftTreeView.setRoot(rootItem);
+
 
         //!populate the list view
         DatabaseConn connectNow = new DatabaseConn();//Creating an instance of the DatabaseConn class
@@ -68,12 +68,31 @@ public class DashboardController implements Initializable {
                 String studentId = resultSet.getString("student_id");
                 String email = resultSet.getString("email");
 
-                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName+ "  " +studentId+ "  " +email;
+                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName + "  " + studentId + "  " + email;
                 dashboardListView.getItems().add(studentListOutput);
             }
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
+        }
+
+        //!populate the tree view
+        try {
+            String studentListQuery = "SELECT * FROM students"; // Query to retrieve all columns from students table
+            Statement statement = connectDB.createStatement();
+            ResultSet resultSet = statement.executeQuery(studentListQuery);
+
+            while (resultSet.next()) {
+                String studentID = resultSet.getString("id");
+                String studentReg = resultSet.getString("reg");
+                String studentName = resultSet.getString("name");
+                String studentGrade = resultSet.getString("grade");
+                TreeItem<String> studentItem = new TreeItem<>(studentID + "." + studentReg + " " + studentName+ " " + studentGrade);
+                branchItem.getChildren().add(studentItem); // Add each student as a child to branchItem
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ex.getCause();
         }
     }
 
@@ -134,7 +153,6 @@ public class DashboardController implements Initializable {
     }
 
 
-
     //! METHOD TO ADD STUDENT
     public void showAddForm() {
         studentInfoLabel.setText("Enter the student details above and click save to add the student to the database");
@@ -152,13 +170,14 @@ public class DashboardController implements Initializable {
         }
 
     }
-    public void setStudentInfoCancelButtonOnAction(ActionEvent event){
+
+    public void setStudentInfoCancelButtonOnAction(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel add student");
         alert.setHeaderText("Are you sure you want to cancel Add student: ");
         alert.setContentText("Press OK to confirm, or Cancel to go back.");
 
-        if(alert.showAndWait().get().getText().equals("OK")){
+        if (alert.showAndWait().get().getText().equals("OK")) {
             studentInfoSaveButton.setVisible(false);
             studentInfoCancelButton.setVisible(false);
             studentInfoLabel.setText("");
@@ -240,7 +259,7 @@ public class DashboardController implements Initializable {
                 String studentId = resultSet.getString("student_id");
                 String email = resultSet.getString("email");
 
-                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName+ "  " +studentId+ "  " +email;
+                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName + "  " + studentId + "  " + email;
                 dashboardListView.getItems().add(studentListOutput);
             }
         } catch (Exception e) {
