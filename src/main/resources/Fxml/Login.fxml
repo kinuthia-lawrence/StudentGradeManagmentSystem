@@ -13,68 +13,82 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.larrykin343.studentgrademanagmentsystem.Controller.LoginController">
    <left>
-      <AnchorPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #ff7f50;" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="39.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
-               <image>
-                  <Image url="@../Images/digitalLibrary.png" />
-               </image>
-            </ImageView>
-            <Label alignment="CENTER" contentDisplay="RIGHT" layoutX="6.0" layoutY="210.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="74.0" prefWidth="217.0" text="    STUDENT GRADE MANAGMENT SYSTEM" textFill="#e4e4e4" wrapText="true" AnchorPane.bottomAnchor="116.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="210.0">
-               <font>
-                  <Font name="Segoe Print Bold" size="15.0" />
-               </font>
-               <effect>
-                  <Blend />
-               </effect>
-            </Label>
-         </children>
+      <AnchorPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #ff7f50;"
+                  BorderPane.alignment="CENTER">
+         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="39.0" layoutY="25.0" pickOnBounds="true"
+                    preserveRatio="true" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="20.0"
+                    AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
+            <Image url="@../Images/digitalLibrary.png"/>
+         </ImageView>
+         <Label alignment="CENTER" contentDisplay="RIGHT" layoutX="6.0" layoutY="210.0" nodeOrientation="LEFT_TO_RIGHT"
+                prefHeight="74.0" prefWidth="217.0" text="    STUDENT GRADE MANAGMENT SYSTEM" textFill="#e4e4e4"
+                wrapText="true" AnchorPane.bottomAnchor="116.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0"
+                AnchorPane.topAnchor="210.0">
+            <font>
+               <Font name="Segoe Print Bold" size="15.0"/>
+            </font>
+            <effect>
+               <Blend/>
+            </effect>
+         </Label>
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: #9a9a9a;" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="60.0" fitWidth="63.0" layoutX="179.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="320.0" AnchorPane.leftAnchor="179.0" AnchorPane.rightAnchor="161.0" AnchorPane.topAnchor="20.0">
-               <image>
-                  <Image url="@../Images/lock.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="14.0" layoutY="133.0" text="Username" textFill="#e4dede" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="299.0">
-               <font>
-                  <Font name="Segoe Print" size="17.0" />
-               </font>
-            </Label>
-            <Label layoutX="25.0" layoutY="187.0" text="Password" textFill="#e4dede" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="304.0" AnchorPane.topAnchor="187.0">
-               <font>
-                  <Font name="Segoe Print" size="17.0" />
-               </font>
-            </Label>
-            <TextField fx:id="UsernameTextField" layoutX="136.0" layoutY="134.0" opacity="0.75" prefHeight="25.0" prefWidth="200.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="134.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-            <PasswordField fx:id="passwordTextField" layoutX="136.0" layoutY="188.0" opacity="0.75" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </PasswordField>
-            <Button fx:id="loginButton" layoutX="10.0" layoutY="259.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="38.0" prefWidth="361.0" style="-fx-background-color: #ff7f50;" text="Login" textFill="#ebe5e5" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="262.0">
-               <font>
-                  <Font name="Segoe Print" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="cancelButton" layoutX="11.0" layoutY="312.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="38.0" prefWidth="361.0" style="-fx-background-color: #ff7f50;" text="Cancel" textFill="#ebe5e5" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="312.0">
-               <font>
-                  <Font name="Segoe Print" size="15.0" />
-               </font>
-            </Button>
-            <Label fx:id="invalidLoginsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="97.0" prefHeight="35.0" prefWidth="400.0" textFill="#f20808" AnchorPane.bottomAnchor="268.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="-9.0" AnchorPane.topAnchor="97.0">
-               <font>
-                  <Font name="Segoe Print" size="14.0" />
-               </font>
-            </Label>
-         </children>
+      <AnchorPane prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: #9a9a9a;"
+                  BorderPane.alignment="CENTER">
+         <ImageView fitHeight="60.0" fitWidth="63.0" layoutX="179.0" layoutY="20.0" pickOnBounds="true"
+                    preserveRatio="true" AnchorPane.bottomAnchor="320.0" AnchorPane.leftAnchor="179.0"
+                    AnchorPane.rightAnchor="161.0" AnchorPane.topAnchor="20.0">
+            <Image url="@../Images/lock.png"/>
+         </ImageView>
+         <Label layoutX="14.0" layoutY="133.0" text="Username" textFill="#e4dede" AnchorPane.leftAnchor="15.0"
+                AnchorPane.rightAnchor="299.0">
+            <font>
+               <Font name="Segoe Print" size="17.0"/>
+            </font>
+         </Label>
+         <Label layoutX="25.0" layoutY="187.0" text="Password" textFill="#e4dede" AnchorPane.bottomAnchor="181.0"
+                AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="304.0" AnchorPane.topAnchor="187.0">
+            <font>
+               <Font name="Segoe Print" size="17.0"/>
+            </font>
+         </Label>
+         <TextField fx:id="UsernameTextField" layoutX="136.0" layoutY="134.0" opacity="0.75" prefHeight="25.0"
+                    prefWidth="200.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="120.0"
+                    AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="134.0">
+            <font>
+               <Font size="14.0"/>
+            </font>
+         </TextField>
+         <PasswordField fx:id="passwordTextField" layoutX="136.0" layoutY="188.0" opacity="0.75" prefHeight="25.0"
+                        prefWidth="200.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="20.0">
+            <font>
+               <Font size="14.0"/>
+            </font>
+         </PasswordField>
+         <Button fx:id="loginButton" layoutX="10.0" layoutY="259.0" mnemonicParsing="false"
+                 onAction="#loginButtonOnAction" prefHeight="38.0" prefWidth="361.0"
+                 style="-fx-background-color: #ff7f50;" text="Login" textFill="#ebe5e5" AnchorPane.bottomAnchor="100.0"
+                 AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="262.0">
+            <font>
+               <Font name="Segoe Print" size="15.0"/>
+            </font>
+         </Button>
+         <Button fx:id="cancelButton" layoutX="11.0" layoutY="312.0" mnemonicParsing="false"
+                 onAction="#cancelButtonOnAction" prefHeight="38.0" prefWidth="361.0"
+                 style="-fx-background-color: #ff7f50;" text="Cancel" textFill="#ebe5e5" AnchorPane.bottomAnchor="50.0"
+                 AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="312.0">
+            <font>
+               <Font name="Segoe Print" size="15.0"/>
+            </font>
+         </Button>
+         <Label fx:id="invalidLoginsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="97.0"
+                prefHeight="35.0" prefWidth="400.0" textFill="#f20808" AnchorPane.bottomAnchor="268.0"
+                AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="-9.0" AnchorPane.topAnchor="97.0">
+            <font>
+               <Font name="Segoe Print" size="14.0"/>
+            </font>
+         </Label>
       </AnchorPane>
    </center>
 </BorderPane>

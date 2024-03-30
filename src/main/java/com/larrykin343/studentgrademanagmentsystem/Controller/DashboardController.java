@@ -1,6 +1,8 @@
 package com.larrykin343.studentgrademanagmentsystem.Controller;
 
 import com.larrykin343.studentgrademanagmentsystem.Utils.DatabaseConn;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,11 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -28,11 +29,13 @@ public class DashboardController implements Initializable {
 
     public Button studentInfoSaveButton;
     public Button studentInfoCancelButton;
+
     public TextField studentInfoRegNoTextField;
     public TextField studentInfoNameTextField;
     public TextField studentInfoIdTextField;
     public TextField studentInfoEmailTextField;
     public MenuItem gradeReportMenu;
+    public Label studentInfoLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,14 +66,13 @@ public class DashboardController implements Initializable {
                 String studentReg = resultSet.getString("reg");
                 String studentName = resultSet.getString("name");
 
-                String studentListOutput = studentID +".    "+studentReg+"  "+ studentName;
+                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName;
                 dashboardListView.getItems().add(studentListOutput);
             }
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
         }
-
 
 
     }
@@ -130,9 +132,83 @@ public class DashboardController implements Initializable {
             }
         }
     }
-    //! method to add students
-    public void addStudent(){
 
+
+
+    //! method to add students
+    public void showAddForm() {
+        studentInfoLabel.setText("Enter the student details above and click save to add the student to the database");
+        studentInfoSaveButton.setVisible(true);
+        studentInfoCancelButton.setVisible(true);
+    }
+
+    public void studentInfoSaveButtonOnAction(ActionEvent event) {
+        if (!studentInfoRegNoTextField.getText().isBlank() && !studentInfoNameTextField.getText().isBlank()
+                && !studentInfoIdTextField.getText().isBlank() && !studentInfoEmailTextField.getText().isBlank()) {
+            addStudent();
+        } else {
+
+            studentInfoLabel.setText("FILL ALL THE FIELDS");
+        }
+
+    }
+    public void setStudentInfoCancelButtonOnAction(ActionEvent event){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cancel add student");
+        alert.setHeaderText("Are you sure you want to cancel Add student: ");
+        alert.setContentText("Press OK to confirm, or Cancel to go back.");
+
+        if(alert.showAndWait().get().getText().equals("OK")){
+            studentInfoSaveButton.setVisible(false);
+            studentInfoCancelButton.setVisible(false);
+            studentInfoLabel.setText("");
+        }
+    }
+
+    public void addStudent() {
+        DatabaseConn connectNow = new DatabaseConn();
+        Connection connectDB = connectNow.getConnection();
+
+        String regNo = studentInfoRegNoTextField.getText();
+        String name = studentInfoNameTextField.getText();
+        String id = studentInfoIdTextField.getText();
+        String email = studentInfoEmailTextField.getText();
+
+
+        String insertQuery = "INSERT INTO students (reg, name, student_id, email) VALUES (?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStatement = connectDB.prepareStatement(insertQuery);
+
+            preparedStatement.setString(1, regNo);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, id);
+            preparedStatement.setString(4, email);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                studentInfoLabel.setText("");
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Success");
+                successAlert.setHeaderText("Student information added successfully.");
+
+                // Set a timeline to automatically close the alert after 1 second
+                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> successAlert.close()));
+                timeline.setCycleCount(1);
+                timeline.play();
+
+                successAlert.showAndWait();
+            } else {
+                studentInfoLabel.setText("");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Failed");
+                alert.setHeaderText("Failed to add student information.");
+                alert.setContentText("An error occurred while adding student information. Please try again.");
+                alert.showAndWait();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ex.getCause();
+        }
     }
 
 

@@ -19,6 +19,7 @@ import javafx.stage.StageStyle;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Objects;
 
 public class LoginController {
     @FXML
@@ -94,11 +95,10 @@ public class LoginController {
         Scene scene = new Scene(fxmlLoader.load());
         mainApplicationStage.setScene(scene);
         mainApplicationStage.setTitle("Student Grade Management System");
-        Image icon = new Image(getClass().getResourceAsStream("/Images/digitalLibrary.png"));
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/digitalLibrary.png")));
         mainApplicationStage.getIcons().add(icon);
         mainApplicationStage.show();
         Stage stage = (Stage) loginButton.getScene().getWindow();
-        stage.initStyle(StageStyle.UTILITY);
         stage.close();
         } catch (Exception e) {
             e.printStackTrace();
