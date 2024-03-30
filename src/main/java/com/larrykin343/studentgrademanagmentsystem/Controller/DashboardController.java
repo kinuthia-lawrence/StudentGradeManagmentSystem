@@ -135,7 +135,7 @@ public class DashboardController implements Initializable {
 
 
 
-    //! method to add students
+    //! METHOD TO ADD STUDENT
     public void showAddForm() {
         studentInfoLabel.setText("Enter the student details above and click save to add the student to the database");
         studentInfoSaveButton.setVisible(true);
@@ -162,6 +162,10 @@ public class DashboardController implements Initializable {
             studentInfoSaveButton.setVisible(false);
             studentInfoCancelButton.setVisible(false);
             studentInfoLabel.setText("");
+            studentInfoRegNoTextField.clear();
+            studentInfoNameTextField.clear();
+            studentInfoEmailTextField.clear();
+            studentInfoIdTextField.clear();
         }
     }
 
@@ -197,6 +201,13 @@ public class DashboardController implements Initializable {
                 timeline.play();
 
                 successAlert.showAndWait();
+                studentInfoSaveButton.setVisible(false);
+                studentInfoCancelButton.setVisible(false);
+                studentInfoLabel.setText("");
+                studentInfoRegNoTextField.clear();
+                studentInfoNameTextField.clear();
+                studentInfoEmailTextField.clear();
+                studentInfoIdTextField.clear();
                 //?Updating the listview
                 updateStudentList();
             } else {
@@ -237,6 +248,11 @@ public class DashboardController implements Initializable {
             e.getCause();
         }
     }
+
+    //! METHOD TO UPDATE STUDENT
+
+
+    //!METHOD TO DELETE STUDENT
 
 
 }
