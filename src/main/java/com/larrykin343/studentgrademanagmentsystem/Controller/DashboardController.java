@@ -40,6 +40,12 @@ public class DashboardController implements Initializable {
     public boolean isUpdateStudent = false;
     public boolean isDeleteStudent = false;
 
+    //?Method to change the text of the button
+    public void changeButtonText(String newText) {
+        studentInfoSaveButton.setText(newText);
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //! creating a tree view in the main application
@@ -158,7 +164,7 @@ public class DashboardController implements Initializable {
 
     //! METHOD TO ADD STUDENT
     public void showAddForm() {
-        studentInfoLabel.setText("Enter the student details above and click save to add the student to the database");
+        studentInfoLabel.setText("Enter the student details above and click \"Save\" to save the student to the database");
         studentInfoSaveButton.setVisible(true);
         studentInfoCancelButton.setVisible(true);
         isAddStudent = true;
@@ -192,7 +198,7 @@ public class DashboardController implements Initializable {
 
             } else {
 
-                studentInfoLabel.setText("FILL ALL THE FIELDS");
+                studentInfoLabel.setText("FILL THE  REGISTRATION NUMBER FIELDS");
             }
         }
 
@@ -304,9 +310,10 @@ public class DashboardController implements Initializable {
         isAddStudent = false;
         isUpdateStudent = true;
         isDeleteStudent = false;
-        studentInfoLabel.setText("Enter the student details above and click save to update the student details in the database");
+        studentInfoLabel.setText("Enter the student details above and click \"Update\" to update the student details in the database");
         studentInfoSaveButton.setVisible(true);
         studentInfoCancelButton.setVisible(true);
+        changeButtonText("Update");
     }
 
 
@@ -388,14 +395,60 @@ public class DashboardController implements Initializable {
 
     //!METHOD TO DELETE STUDENT
     public void showDeleteForm() {
-        studentInfoLabel.setText("Enter the student Registration Number above and click save to delete the student from the database");
+        studentInfoLabel.setText("Enter the student Registration Number above and click \"Delete\" to delete the student from the database");
         studentInfoSaveButton.setVisible(true);
         studentInfoCancelButton.setVisible(true);
-        deleteStudent();
+        changeButtonText("Delete");
+        isDeleteStudent = true;
     }
 
     private void deleteStudent() {
+// Get the registration number from the text field
+        String regNo = studentInfoRegNoTextField.getText();
 
+        // Confirm deletion with a dialog
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmAlert.setTitle("Confirm Deletion");
+        confirmAlert.setHeaderText("Are you sure you want to delete the student with registration number " + regNo + "?");
+        confirmAlert.setContentText("This action cannot be undone.");
+
+        // Show the confirmation dialog and proceed with deletion if confirmed
+        confirmAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                DatabaseConn connectNow = new DatabaseConn();
+                Connection connectDB = connectNow.getConnection();
+
+                // SQL query to delete the student with the specified registration number
+                String deleteQuery = "DELETE FROM students WHERE reg = ?";
+                try {
+                    PreparedStatement deleteStatement = connectDB.prepareStatement(deleteQuery);
+                    deleteStatement.setString(1, regNo);
+
+                    // Execute the deletion query
+                    int rowsAffected = deleteStatement.executeUpdate();
+                    if (rowsAffected > 0) {
+                        // Student deleted successfully
+                        Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                        successAlert.setTitle("Success");
+                        successAlert.setHeaderText("Student with registration number " + regNo + " deleted successfully.");
+                        successAlert.showAndWait();
+
+                        //? Update the list view after deletion
+                        updateStudentList();
+                    } else {
+                        // No student found with the specified registration number
+                        Alert notFoundAlert = new Alert(Alert.AlertType.ERROR);
+                        notFoundAlert.setTitle("Error");
+                        notFoundAlert.setHeaderText("Student with registration number " + regNo + " not found.");
+                        notFoundAlert.setContentText("No student found with the specified registration number.");
+                        notFoundAlert.showAndWait();
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    ex.getCause();
+                }
+            }
+        });
     }
 
 
