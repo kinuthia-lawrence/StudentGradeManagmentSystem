@@ -40,6 +40,8 @@ public class DashboardController implements Initializable {
     public boolean isUpdateStudent = false;
     public boolean isDeleteStudent = false;
 
+    private TreeItem<String> branchItem;
+
     //?Method to change the text of the button
     public void changeButtonText(String newText) {
         studentInfoSaveButton.setText(newText);
@@ -51,7 +53,7 @@ public class DashboardController implements Initializable {
         //! creating a tree view in the main application
         TreeItem<String> rootItem = new TreeItem<>("leftTreeView");
 
-        TreeItem<String> branchItem = new TreeItem<>("Students");
+        branchItem = new TreeItem<>("Students");
         TreeItem<String> branchItem2 = new TreeItem<>("Courses");
 
 
@@ -263,8 +265,9 @@ public class DashboardController implements Initializable {
                 studentInfoNameTextField.clear();
                 studentInfoEmailTextField.clear();
                 studentInfoIdTextField.clear();
-                //?Updating the listview
+                //?Updating the listview and treeview
                 updateStudentList();
+                updateTreeView();
             } else {
                 studentInfoLabel.setText("");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -303,6 +306,35 @@ public class DashboardController implements Initializable {
             e.getCause();
         }
     }
+    public void updateTreeView() {
+        DatabaseConn connectNow = new DatabaseConn();//Creating an instance of the DatabaseConn class
+        Connection connectDB = connectNow.getConnection(); //this is the connection to the database
+
+        if(branchItem == null){
+            branchItem = new TreeItem<>("Students");
+        }
+        // Clear the existing children of the branchItem
+        branchItem.getChildren().clear();
+
+        try {
+            String studentListQuery = "SELECT * FROM students"; // Query to retrieve all columns from students table
+            Statement statement = connectDB.createStatement();
+            ResultSet resultSet = statement.executeQuery(studentListQuery);
+
+            while (resultSet.next()) {
+                String studentID = resultSet.getString("id");
+                String studentReg = resultSet.getString("reg");
+                String studentName = resultSet.getString("name");
+                String studentGrade = resultSet.getString("grade");
+                TreeItem<String> studentItem = new TreeItem<>(studentID + "." + studentReg + " " + studentName + " " + studentGrade);
+                branchItem.getChildren().add(studentItem); // Add each student as a child to branchItem
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ex.getCause();
+        }
+    }
+
 
 
     //! METHOD TO UPDATE STUDENT
@@ -366,8 +398,9 @@ public class DashboardController implements Initializable {
                     studentInfoEmailTextField.clear();
                     studentInfoIdTextField.clear();
 
-                    //?Updating the listview
+                    //?Updating the listview and treeview
                     updateStudentList();
+                    updateTreeView();
                 } else {
                     // Error occurred while updating student information
                     studentInfoLabel.setText("");
@@ -400,6 +433,8 @@ public class DashboardController implements Initializable {
         studentInfoCancelButton.setVisible(true);
         changeButtonText("Delete");
         isDeleteStudent = true;
+        isAddStudent = false;
+        isUpdateStudent = false;
     }
 
     private void deleteStudent() {
@@ -409,7 +444,7 @@ public class DashboardController implements Initializable {
         // Confirm deletion with a dialog
         Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmAlert.setTitle("Confirm Deletion");
-        confirmAlert.setHeaderText("Are you sure you want to delete the student with registration number " + regNo + "?");
+        confirmAlert.setHeaderText("Are you sure you want to delete the student with registration number    \"" + regNo + "\"?");
         confirmAlert.setContentText("This action cannot be undone.");
 
         // Show the confirmation dialog and proceed with deletion if confirmed
@@ -430,11 +465,17 @@ public class DashboardController implements Initializable {
                         // Student deleted successfully
                         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                         successAlert.setTitle("Success");
-                        successAlert.setHeaderText("Student with registration number " + regNo + " deleted successfully.");
+                        successAlert.setHeaderText("Student with registration number   \"" + regNo + " \" deleted successfully.");
+
+                        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> successAlert.close()));
+                        timeline.setCycleCount(1);
+                        timeline.play();
+
                         successAlert.showAndWait();
 
-                        //? Update the list view after deletion
+                        //? Update the list view and treeview after deletion
                         updateStudentList();
+                        updateTreeView();
                     } else {
                         // No student found with the specified registration number
                         Alert notFoundAlert = new Alert(Alert.AlertType.ERROR);
