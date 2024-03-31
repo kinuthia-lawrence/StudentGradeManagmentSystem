@@ -57,9 +57,9 @@
            <Menu mnemonicParsing="false" text="Edit">
                <MenuItem mnemonicParsing="false" onAction="#showAddForm" text="Add Student" />
                <SeparatorMenuItem mnemonicParsing="false" />
-               <MenuItem mnemonicParsing="false" text="Edit Student" />
+               <MenuItem mnemonicParsing="false" onAction="#showUpdateForm" text="Edit Student" />
                <SeparatorMenuItem mnemonicParsing="false" />
-               <MenuItem mnemonicParsing="false" text="Remove Student" />
+               <MenuItem mnemonicParsing="false" onAction="#showDeleteForm" text="Remove Student" />
            </Menu>
            <Menu mnemonicParsing="false" text="View Menu">
                <MenuItem mnemonicParsing="false" text="Student List" />

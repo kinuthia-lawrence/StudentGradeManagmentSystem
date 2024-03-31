@@ -36,6 +36,9 @@ public class DashboardController implements Initializable {
     public TextField studentInfoEmailTextField;
     public MenuItem gradeReportMenu;
     public Label studentInfoLabel;
+    public boolean isAddStudent = false;
+    public boolean isUpdateStudent = false;
+    public boolean isDeleteStudent = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -87,7 +90,7 @@ public class DashboardController implements Initializable {
                 String studentReg = resultSet.getString("reg");
                 String studentName = resultSet.getString("name");
                 String studentGrade = resultSet.getString("grade");
-                TreeItem<String> studentItem = new TreeItem<>(studentID + "." + studentReg + " " + studentName+ " " + studentGrade);
+                TreeItem<String> studentItem = new TreeItem<>(studentID + "." + studentReg + " " + studentName + " " + studentGrade);
                 branchItem.getChildren().add(studentItem); // Add each student as a child to branchItem
             }
         } catch (SQLException ex) {
@@ -158,33 +161,43 @@ public class DashboardController implements Initializable {
         studentInfoLabel.setText("Enter the student details above and click save to add the student to the database");
         studentInfoSaveButton.setVisible(true);
         studentInfoCancelButton.setVisible(true);
+        isAddStudent = true;
+        isUpdateStudent = false;
+        isDeleteStudent = false;
     }
 
-    public void studentInfoSaveButtonOnAction(ActionEvent event) {
-        if (!studentInfoRegNoTextField.getText().isBlank() && !studentInfoNameTextField.getText().isBlank()
-                && !studentInfoIdTextField.getText().isBlank() && !studentInfoEmailTextField.getText().isBlank()) {
-            addStudent();
-        } else {
 
-            studentInfoLabel.setText("FILL ALL THE FIELDS");
+    public void studentInfoSaveButtonOnAction(ActionEvent event) {
+        if (isAddStudent) {
+            if (!studentInfoRegNoTextField.getText().isBlank() && !studentInfoNameTextField.getText().isBlank()
+                    && !studentInfoIdTextField.getText().isBlank() && !studentInfoEmailTextField.getText().isBlank()) {
+                addStudent();
+
+            } else {
+
+                studentInfoLabel.setText("FILL ALL THE FIELDS");
+            }
         }
 
     }
 
-    public void setStudentInfoCancelButtonOnAction(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Cancel add student");
-        alert.setHeaderText("Are you sure you want to cancel Add student: ");
-        alert.setContentText("Press OK to confirm, or Cancel to go back.");
 
-        if (alert.showAndWait().get().getText().equals("OK")) {
-            studentInfoSaveButton.setVisible(false);
-            studentInfoCancelButton.setVisible(false);
-            studentInfoLabel.setText("");
-            studentInfoRegNoTextField.clear();
-            studentInfoNameTextField.clear();
-            studentInfoEmailTextField.clear();
-            studentInfoIdTextField.clear();
+    public void setStudentInfoCancelButtonOnAction(ActionEvent event) {
+        if (isAddStudent) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Cancel add student");
+            alert.setHeaderText("Are you sure you want to cancel Add student: ");
+            alert.setContentText("Press OK to confirm, or Cancel to go back.");
+
+            if (alert.showAndWait().get().getText().equals("OK")) {
+                studentInfoSaveButton.setVisible(false);
+                studentInfoCancelButton.setVisible(false);
+                studentInfoLabel.setText("");
+                studentInfoRegNoTextField.clear();
+                studentInfoNameTextField.clear();
+                studentInfoEmailTextField.clear();
+                studentInfoIdTextField.clear();
+            }
         }
     }
 
@@ -268,10 +281,24 @@ public class DashboardController implements Initializable {
         }
     }
 
+
     //! METHOD TO UPDATE STUDENT
+    public void showUpdateForm() {
+        isAddStudent = false;
+        isUpdateStudent = true;
+        isDeleteStudent = false;
+        studentInfoLabel.setText("Enter the student details above and click save to update the student details in the database");
+        studentInfoSaveButton.setVisible(true);
+        studentInfoCancelButton.setVisible(true);
+    }
 
 
     //!METHOD TO DELETE STUDENT
+    public void showDeleteForm() {
+        studentInfoLabel.setText("Enter the student Registration Number above and click save to delete the student from the database");
+        studentInfoSaveButton.setVisible(true);
+        studentInfoCancelButton.setVisible(true);
+    }
 
 
 }
