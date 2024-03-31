@@ -177,6 +177,23 @@ public class DashboardController implements Initializable {
 
                 studentInfoLabel.setText("FILL ALL THE FIELDS");
             }
+        }else if (isUpdateStudent){
+            if (!studentInfoRegNoTextField.getText().isBlank() && !studentInfoNameTextField.getText().isBlank()
+                    && !studentInfoIdTextField.getText().isBlank() && !studentInfoEmailTextField.getText().isBlank()) {
+                updateStudent();
+
+            } else {
+
+                studentInfoLabel.setText("FILL ALL THE FIELDS");
+            }
+        }else if(isDeleteStudent){
+            if (!studentInfoRegNoTextField.getText().isBlank()) {
+                deleteStudent();
+
+            } else {
+
+                studentInfoLabel.setText("FILL ALL THE FIELDS");
+            }
         }
 
     }
@@ -205,7 +222,7 @@ public class DashboardController implements Initializable {
         DatabaseConn connectNow = new DatabaseConn();
         Connection connectDB = connectNow.getConnection();
 
-        String regNo = studentInfoRegNoTextField.getText();
+        String regNo = studentInfoRegNoTextField.getText().toUpperCase();
         String name = studentInfoNameTextField.getText();
         String id = studentInfoIdTextField.getText();
         String email = studentInfoEmailTextField.getText();
@@ -293,11 +310,92 @@ public class DashboardController implements Initializable {
     }
 
 
+    private void updateStudent() {
+        DatabaseConn connectNow = new DatabaseConn();
+        Connection connectDB = connectNow.getConnection();
+
+        String regNo = studentInfoRegNoTextField.getText();
+        String name = studentInfoNameTextField.getText();
+        String id = studentInfoIdTextField.getText();
+        String email = studentInfoEmailTextField.getText();
+
+        // Check if a student with the specified registration number exists
+        String searchQuery = "SELECT * FROM students WHERE reg = ?";
+        try {
+            PreparedStatement searchStatement = connectDB.prepareStatement(searchQuery);
+            searchStatement.setString(1, regNo);
+            ResultSet resultSet = searchStatement.executeQuery();
+
+            if (resultSet.next()) {
+                // Update the existing student's information
+                int studentID = resultSet.getInt("id");
+                String updateQuery = "UPDATE students SET name = ?, student_id = ?, email = ? WHERE id = ?";
+                PreparedStatement updateStatement = connectDB.prepareStatement(updateQuery);
+                updateStatement.setString(1, name);
+                updateStatement.setString(2, id);
+                updateStatement.setString(3, email);
+                updateStatement.setInt(4, studentID);
+
+                int rowsAffected = updateStatement.executeUpdate();
+                if (rowsAffected > 0) {
+                    // Student information updated successfully
+                    studentInfoLabel.setText("");
+                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                    successAlert.setTitle("Success");
+                    successAlert.setHeaderText("Student information updated successfully.");
+
+                    // Set a timeline to automatically close the alert after 1 second
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> successAlert.close()));
+                    timeline.setCycleCount(1);
+                    timeline.play();
+
+                    successAlert.showAndWait();
+
+                    // Clear input fields and hide buttons
+                    studentInfoSaveButton.setVisible(false);
+                    studentInfoCancelButton.setVisible(false);
+                    studentInfoRegNoTextField.clear();
+                    studentInfoNameTextField.clear();
+                    studentInfoEmailTextField.clear();
+                    studentInfoIdTextField.clear();
+
+                    //?Updating the listview
+                    updateStudentList();
+                } else {
+                    // Error occurred while updating student information
+                    studentInfoLabel.setText("");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Failed");
+                    alert.setHeaderText("Failed to update student information.");
+                    alert.setContentText("An error occurred while updating student information. Please try again.");
+                    alert.showAndWait();
+                }
+            } else {
+                // Student with the specified registration number does not exist
+                studentInfoLabel.setText("");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Student with registration number " + regNo + " not found.");
+                alert.setContentText("Please enter a valid registration number.");
+                alert.showAndWait();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ex.getCause();
+        }
+    }
+
+
     //!METHOD TO DELETE STUDENT
     public void showDeleteForm() {
         studentInfoLabel.setText("Enter the student Registration Number above and click save to delete the student from the database");
         studentInfoSaveButton.setVisible(true);
         studentInfoCancelButton.setVisible(true);
+        deleteStudent();
+    }
+
+    private void deleteStudent() {
+
     }
 
 
