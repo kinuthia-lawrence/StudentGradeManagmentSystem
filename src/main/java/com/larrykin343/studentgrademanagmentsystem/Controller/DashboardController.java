@@ -245,6 +245,7 @@ public class DashboardController implements Initializable {
             preparedStatement.setString(3, id);
             preparedStatement.setString(4, email);
 
+
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
                 studentInfoLabel.setText("");
@@ -375,6 +376,7 @@ public class DashboardController implements Initializable {
                 updateStatement.setString(3, email);
                 updateStatement.setInt(4, studentID);
 
+
                 int rowsAffected = updateStatement.executeUpdate();
                 if (rowsAffected > 0) {
                     // Student information updated successfully
@@ -455,12 +457,23 @@ public class DashboardController implements Initializable {
 
                 // SQL query to delete the student with the specified registration number
                 String deleteQuery = "DELETE FROM students WHERE reg = ?";
+
+//                //? Reset the AUTO_INCREMENT value of the id column
+//                String resetAutoIncrementQuery = "ALTER TABLE students AUTO_INCREMENT = 1";
+
                 try {
                     PreparedStatement deleteStatement = connectDB.prepareStatement(deleteQuery);
                     deleteStatement.setString(1, regNo);
 
+
+
                     // Execute the deletion query
                     int rowsAffected = deleteStatement.executeUpdate();
+
+//                    Statement resetStatement = connectDB.createStatement();
+//                    resetStatement.executeUpdate(resetAutoIncrementQuery);
+
+
                     if (rowsAffected > 0) {
                         // Student deleted successfully
                         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
