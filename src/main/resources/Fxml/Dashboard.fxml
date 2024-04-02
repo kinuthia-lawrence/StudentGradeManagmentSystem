@@ -143,23 +143,23 @@
                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        </rowConstraints>
-                       <Label alignment="CENTER" prefHeight="17.0" prefWidth="98.0" text="Course Details" />
-                       <ListView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-                       <TextField promptText="Marks" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                       <Button contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #ff7f5a;" text="Calculate" textFill="#f5efef" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                       <Label alignment="CENTER" prefHeight="17.0" prefWidth="98.0" text="Reg. No." />
+                       <TextField fx:id="course1MarksField" promptText="Marks" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                       <Button fx:id="calculateButton" onAction="#calculateGrade" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #ff7f5a;" text="Calculate" textFill="#f5efef" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="100.0" text="Final Grade" GridPane.rowIndex="10" />
-                       <Label alignment="CENTER" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #9a9a9a;" text="A" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                       <Label fx:id="finalGrade" alignment="CENTER" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #9a9a9a;" text="A" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                        <Label prefHeight="27.0" prefWidth="100.0" text="Marks" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                        <Label layoutX="110.0" layoutY="72.0" prefHeight="27.0" prefWidth="100.0" text="Course Code" GridPane.rowIndex="2" />
-                       <TextField layoutX="110.0" layoutY="103.0" promptText="Javfx" GridPane.rowIndex="3" />
-                       <TextField layoutX="110.0" layoutY="103.0" promptText="Marks" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                       <TextField layoutX="110.0" layoutY="133.0" promptText="Marks" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                       <TextField layoutX="110.0" layoutY="163.0" promptText="Marks" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                       <TextField layoutX="10.0" layoutY="103.0" promptText="OOP" GridPane.rowIndex="4" />
-                       <TextField layoutX="110.0" layoutY="103.0" promptText="Marks" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                       <TextField layoutX="10.0" layoutY="133.0" promptText="OOP" GridPane.rowIndex="5" />
-                       <TextField layoutX="10.0" layoutY="163.0" promptText="OOP" GridPane.rowIndex="6" />
-                       <TextField layoutX="10.0" layoutY="193.0" promptText="Database" GridPane.rowIndex="7" />
+                       <TextField fx:id="course1TextField" layoutX="110.0" layoutY="103.0" promptText="Javfx" GridPane.rowIndex="3" />
+                       <TextField fx:id="course3MarksField" layoutX="110.0" layoutY="103.0" promptText="Marks" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                       <TextField fx:id="course4MarksField" layoutX="110.0" layoutY="133.0" promptText="Marks" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                       <TextField fx:id="course5MarksField" layoutX="110.0" layoutY="163.0" promptText="Marks" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                       <TextField fx:id="course2TextField" layoutX="10.0" layoutY="103.0" promptText="OOP" GridPane.rowIndex="4" />
+                       <TextField fx:id="course2MarksField" layoutX="110.0" layoutY="103.0" promptText="Marks" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                       <TextField fx:id="course3TextField" layoutX="10.0" layoutY="133.0" promptText="OOP" GridPane.rowIndex="5" />
+                       <TextField fx:id="course4TextField" layoutX="10.0" layoutY="163.0" promptText="OOP" GridPane.rowIndex="6" />
+                       <TextField fx:id="course5TextField" layoutX="10.0" layoutY="193.0" promptText="Database" GridPane.rowIndex="7" />
+                  <TextField fx:id="regNoTextField" layoutX="10.0" layoutY="103.0" promptText="EB1/61273/22" GridPane.rowIndex="1" />
                    </GridPane>
                </AnchorPane>
            </Tab>

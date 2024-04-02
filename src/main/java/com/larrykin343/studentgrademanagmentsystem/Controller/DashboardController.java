@@ -39,6 +39,20 @@ public class DashboardController implements Initializable {
     public boolean isAddStudent = false;
     public boolean isUpdateStudent = false;
     public boolean isDeleteStudent = false;
+    public TextField course1MarksField;
+   
+    public Button calculateButton;
+    public Label finalGrade;
+    public TextField course1TextField;
+    public TextField course3MarksField;
+    public TextField course4MarksField;
+    public TextField course5MarksField;
+    public TextField course2TextField;
+    public TextField course2MarksField;
+    public TextField course3TextField;
+    public TextField course4TextField;
+    public TextField course5TextField;
+    public TextField regNoTextField;
 
     private TreeItem<String> branchItem;
 
@@ -506,4 +520,67 @@ public class DashboardController implements Initializable {
     }
 
 
+    public void calculateGrade(ActionEvent event) {
+        double course1Marks = Double.parseDouble(course1MarksField.getText());
+        double course2Marks = Double.parseDouble(course2MarksField.getText());
+        double course3Marks = Double.parseDouble(course3MarksField.getText());
+        double course4Marks = Double.parseDouble(course4MarksField.getText());
+        double course5Marks = Double.parseDouble(course5MarksField.getText());
+
+        double average = (course1Marks + course2Marks + course3Marks + course4Marks + course5Marks) / 5;
+
+        String grade;
+        if (average >= 70) {
+            grade = "A";
+        } else if (average >= 60) {
+            grade = "B";
+        } else if (average >= 50) {
+            grade = "C";
+        } else if (average >= 40) {
+            grade = "D";
+        } else {
+            grade = "F";
+        }
+
+        finalGrade.setText(grade);
+
+
+        String regNo = regNoTextField.getText();
+        DatabaseConn connectNow = new DatabaseConn();
+        Connection connectDB = connectNow.getConnection();
+
+        String updateQuery = "UPDATE students SET grade = ? WHERE reg = ?";
+        try {
+            PreparedStatement preparedStatement = connectDB.prepareStatement(updateQuery);
+            preparedStatement.setString(1, grade);
+            preparedStatement.setString(2, regNo);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Success");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("Grade updated successfully");
+                successAlert.showAndWait();
+
+                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> successAlert.close()));
+                timeline.setCycleCount(1);
+                timeline.play();
+
+                successAlert.showAndWait();
+                //? Update the list view and tree view after updating the grade
+                updateStudentList();
+                updateTreeView();
+            } else {
+                Alert failureAlert = new Alert(Alert.AlertType.ERROR);
+                failureAlert.setTitle("Error");
+                failureAlert.setHeaderText(null);
+                failureAlert.setContentText("Failed to update grade. Please try again.");
+                failureAlert.showAndWait();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ex.getCause();
+        }
+    }
 }
