@@ -167,7 +167,7 @@
                   <Label fx:id="unit4Label" prefHeight="27.0" prefWidth="100.0" text="COSC 226" GridPane.rowIndex="8" />
                   <Label fx:id="unit5Label" prefHeight="27.0" prefWidth="100.0" text="COSC 227" GridPane.rowIndex="9" />
                   <Button fx:id="getUnitButton" contentDisplay="CENTER" layoutX="110.0" layoutY="313.0" mnemonicParsing="false" onAction="#getCourseDetails" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #ff7f5a;" text="Get Units" textFill="#f5efef" GridPane.rowIndex="2" />
-                  <Button fx:id="cancelCalculate" contentDisplay="CENTER" layoutX="10.0" layoutY="73.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #ff7f5a;" text="Cancel" textFill="#f5efef" GridPane.rowIndex="10" />
+                  <Button fx:id="cancelCalculate" contentDisplay="CENTER" layoutX="10.0" layoutY="73.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #ff7f5a;" text="Cancel" textFill="#f5efef" visible="false" GridPane.rowIndex="10" />
                    </GridPane>
                </AnchorPane>
            </Tab>

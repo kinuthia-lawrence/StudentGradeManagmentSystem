@@ -56,7 +56,8 @@ public class DashboardController implements Initializable {
     public Button cancelCalculate;
     public Button getUnitButton;
 
-    private TreeItem<String> branchItem;
+    private TreeItem<String> studentBranchItem;
+    private TreeItem<String> coursesBranchItem2;
 
     //?Method to change the text of the button
     public void changeButtonText(String newText) {
@@ -69,13 +70,11 @@ public class DashboardController implements Initializable {
         //! creating a tree view in the main application
         TreeItem<String> rootItem = new TreeItem<>("leftTreeView");
 
-        branchItem = new TreeItem<>("Students");
-        TreeItem<String> branchItem2 = new TreeItem<>("Courses");
+        studentBranchItem = new TreeItem<>("Students");
+        coursesBranchItem2 = new TreeItem<>("Courses");
 
 
-        TreeItem<String> leafItem2 = new TreeItem<>("//:TODO: Add Courses");
-        branchItem2.getChildren().addAll(leafItem2);
-        rootItem.getChildren().addAll(branchItem, branchItem2);
+        rootItem.getChildren().addAll(studentBranchItem, coursesBranchItem2);
         leftTreeView.setShowRoot(false);
         leftTreeView.setRoot(rootItem);
 
@@ -103,7 +102,7 @@ public class DashboardController implements Initializable {
             e.getCause();
         }
 
-        //!populate the tree view
+        //!populate the student tree view
         try {
             String studentListQuery = "SELECT * FROM students"; // Query to retrieve all columns from students table
             Statement statement = connectDB.createStatement();
@@ -115,7 +114,30 @@ public class DashboardController implements Initializable {
                 String studentName = resultSet.getString("name");
                 String studentGrade = resultSet.getString("grade");
                 TreeItem<String> studentItem = new TreeItem<>(studentID + "." + studentReg + " " + studentName + " " + studentGrade);
-                branchItem.getChildren().add(studentItem); // Add each student as a child to branchItem
+                studentBranchItem.getChildren().add(studentItem); // Add each student as a child to branchItem
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ex.getCause();
+        }
+        //!populate the Course tree view
+        try {
+            String studentListQuery = "SELECT * FROM courses"; // Query to retrieve all columns from courses table
+            Statement statement = connectDB.createStatement();
+            ResultSet resultSet = statement.executeQuery(studentListQuery);
+
+            while (resultSet.next()) {
+                String courseId = resultSet.getString("id");
+                String courseCode = resultSet.getString("course_code");
+                String year = resultSet.getString("year");
+                String unit1 = resultSet.getString("unit1");
+                String unit2 = resultSet.getString("unit2");
+                String unit3 = resultSet.getString("unit3");
+                String unit4 = resultSet.getString("unit4");
+                String unit5 = resultSet.getString("unit5");
+
+                TreeItem<String> courseItem = new TreeItem<>(courseId + "." + courseCode + " " + year + " " + unit1 + " " + unit2 + " " + unit3 + " " + unit4 + " " + unit5);
+                coursesBranchItem2.getChildren().add(courseItem); // Add each course as a child to branchItem
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -328,11 +350,11 @@ public class DashboardController implements Initializable {
         DatabaseConn connectNow = new DatabaseConn();//Creating an instance of the DatabaseConn class
         Connection connectDB = connectNow.getConnection(); //this is the connection to the database
 
-        if (branchItem == null) {
-            branchItem = new TreeItem<>("Students");
+        if (studentBranchItem == null) {
+            studentBranchItem = new TreeItem<>("Students");
         }
         // Clear the existing children of the branchItem
-        branchItem.getChildren().clear();
+        studentBranchItem.getChildren().clear();
 
         try {
             String studentListQuery = "SELECT * FROM students"; // Query to retrieve all columns from students table
@@ -345,7 +367,7 @@ public class DashboardController implements Initializable {
                 String studentName = resultSet.getString("name");
                 String studentGrade = resultSet.getString("grade");
                 TreeItem<String> studentItem = new TreeItem<>(studentID + "." + studentReg + " " + studentName + " " + studentGrade);
-                branchItem.getChildren().add(studentItem); // Add each student as a child to branchItem
+                studentBranchItem.getChildren().add(studentItem); // Add each student as a child to branchItem
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -524,6 +546,7 @@ public class DashboardController implements Initializable {
     public void getCourseDetails() {
         if (!courseCodeTextField.getText().isBlank() && !yearTextField.getText().isBlank()) {
             calculateButton.setVisible(true);
+            cancelCalculate.setVisible(true);
 
             //getting the course code and year from the text field
             String courseCodeValue = courseCodeTextField.getText().toUpperCase();
@@ -663,6 +686,7 @@ public class DashboardController implements Initializable {
 
     public void clearFields(ActionEvent event) {
         calculateButton.setVisible(false);
+        cancelCalculate.setVisible(false);
         courseCodeTextField.clear();
         yearTextField.clear();
         regNoTextField.clear();
