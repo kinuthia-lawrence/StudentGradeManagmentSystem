@@ -38,21 +38,23 @@ public class DashboardController implements Initializable {
     public boolean isAddStudent = false;
     public boolean isUpdateStudent = false;
     public boolean isDeleteStudent = false;
-    public TextField course1MarksField;
+    public TextField unit1MarksField;
     public Button calculateButton;
     public Label finalGrade;
-    public TextField course3MarksField;
-    public TextField course4MarksField;
-    public TextField course5MarksField;
-    public TextField course2MarksField;
+    public TextField unit3MarksField;
+    public TextField unit4MarksField;
+    public TextField unit5MarksField;
+    public TextField unit2MarksField;
     public TextField regNoTextField;
-    public TextField courseCode;
+    public TextField courseCodeTextField;
     public TextField yearTextField;
     public Label unit1Label;
     public Label unit2Label;
     public Label unit3Label;
     public Label unit4Label;
     public Label unit5Label;
+    public Button cancelCalculate;
+    public Button getUnitButton;
 
     private TreeItem<String> branchItem;
 
@@ -199,7 +201,7 @@ public class DashboardController implements Initializable {
 
                 studentInfoLabel.setText("FILL ALL THE FIELDS");
             }
-        }else if (isUpdateStudent){
+        } else if (isUpdateStudent) {
             if (!studentInfoRegNoTextField.getText().isBlank() && !studentInfoNameTextField.getText().isBlank()
                     && !studentInfoIdTextField.getText().isBlank() && !studentInfoEmailTextField.getText().isBlank()) {
                 updateStudent();
@@ -208,7 +210,7 @@ public class DashboardController implements Initializable {
 
                 studentInfoLabel.setText("FILL ALL THE FIELDS");
             }
-        }else if(isDeleteStudent){
+        } else if (isDeleteStudent) {
             if (!studentInfoRegNoTextField.getText().isBlank()) {
                 deleteStudent();
 
@@ -321,11 +323,12 @@ public class DashboardController implements Initializable {
             e.getCause();
         }
     }
+
     public void updateTreeView() {
         DatabaseConn connectNow = new DatabaseConn();//Creating an instance of the DatabaseConn class
         Connection connectDB = connectNow.getConnection(); //this is the connection to the database
 
-        if(branchItem == null){
+        if (branchItem == null) {
             branchItem = new TreeItem<>("Students");
         }
         // Clear the existing children of the branchItem
@@ -349,7 +352,6 @@ public class DashboardController implements Initializable {
             ex.getCause();
         }
     }
-
 
 
     //! METHOD TO UPDATE STUDENT
@@ -480,7 +482,6 @@ public class DashboardController implements Initializable {
                     deleteStatement.setString(1, regNo);
 
 
-
                     // Execute the deletion query
                     int rowsAffected = deleteStatement.executeUpdate();
 
@@ -520,14 +521,82 @@ public class DashboardController implements Initializable {
     }
 
 
-    public void calculateGrade(ActionEvent event) {
-        double course1Marks = Double.parseDouble(course1MarksField.getText());
-        double course2Marks = Double.parseDouble(course2MarksField.getText());
-        double course3Marks = Double.parseDouble(course3MarksField.getText());
-        double course4Marks = Double.parseDouble(course4MarksField.getText());
-        double course5Marks = Double.parseDouble(course5MarksField.getText());
+    public void getCourseDetails() {
+        if (!courseCodeTextField.getText().isBlank() && !yearTextField.getText().isBlank()) {
+            calculateButton.setVisible(true);
 
-        double average = (course1Marks + course2Marks + course3Marks + course4Marks + course5Marks) / 5;
+            //getting the course code and year from the text field
+            String courseCodeValue = courseCodeTextField.getText().toUpperCase();
+            String yearValue = yearTextField.getText().toUpperCase();
+
+            // Initialize variables to store unit details
+            String unit1 = null, unit2 = null, unit3 = null, unit4 = null, unit5 = null;
+
+            // Query to retrieve course details from the database
+            String query = "SELECT unit1, unit2, unit3, unit4, unit5 FROM courses WHERE course_code = ? AND year = ?";
+
+            // Get database connection
+            DatabaseConn connectNow = new DatabaseConn();
+            Connection connectDB = connectNow.getConnection();
+
+            try {
+                // Prepare the SQL statement
+                PreparedStatement preparedStatement = connectDB.prepareStatement(query);
+                preparedStatement.setString(1, courseCodeValue);
+                preparedStatement.setString(2, yearValue);
+
+                // Execute the query
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                // Check if a record is found
+                if (resultSet.next()) {
+                    // Retrieve unit details from the result set
+                    unit1 = resultSet.getString("unit1");
+                    unit2 = resultSet.getString("unit2");
+                    unit3 = resultSet.getString("unit3");
+                    unit4 = resultSet.getString("unit4");
+                    unit5 = resultSet.getString("unit5");
+
+                    // Use the retrieved values as needed
+                    unit1Label.setText(unit1);
+                    unit2Label.setText(unit2);
+                    unit3Label.setText(unit3);
+                    unit4Label.setText(unit4);
+                    unit5Label.setText(unit5);
+                } else {
+                    // No matching record found
+                    System.out.println("No course found for the provided code and year.");
+                    Alert notFoundAlert = new Alert(Alert.AlertType.ERROR);
+                    notFoundAlert.setTitle("Error");
+                    notFoundAlert.setHeaderText("Course with Course code: " + courseCodeValue + " and year: " + yearValue + " not found.");
+                    notFoundAlert.setContentText("No course found for the provided code and year.");
+                    notFoundAlert.showAndWait();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Course code and year required");
+            alert.setContentText("Please enter the course code and year to retrieve course details.");
+            alert.showAndWait();
+        }
+    }
+
+
+    public void calculateGrade(ActionEvent event) {
+        if(!unit1MarksField.getText().isBlank() && !unit2MarksField.getText().isBlank() && !unit3MarksField.getText().isBlank() && !unit4MarksField.getText().isBlank() && !unit5MarksField.getText().isBlank() && !regNoTextField.getText().isBlank()){
+
+        double unit1Marks = Double.parseDouble(unit1MarksField.getText());
+        double unit2Marks = Double.parseDouble(unit2MarksField.getText());
+        double unit3Marks = Double.parseDouble(unit3MarksField.getText());
+        double unit4Marks = Double.parseDouble(unit4MarksField.getText());
+        double unit5Marks = Double.parseDouble(unit5MarksField.getText());
+
+        double average = (unit1Marks + unit2Marks + unit3Marks + unit4Marks + unit5Marks) / 5;
 
         String grade;
         if (average >= 70) {
@@ -582,5 +651,31 @@ public class DashboardController implements Initializable {
             ex.printStackTrace();
             ex.getCause();
         }
+
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("All fields required");
+            alert.setContentText("Please enter marks for all units and the registration number.");
+            alert.showAndWait();
+        }
+    }
+
+    public void clearFields(ActionEvent event) {
+        calculateButton.setVisible(false);
+        courseCodeTextField.clear();
+        yearTextField.clear();
+        regNoTextField.clear();
+        unit1MarksField.clear();
+        unit2MarksField.clear();
+        unit3MarksField.clear();
+        unit4MarksField.clear();
+        unit5MarksField.clear();
+        finalGrade.setText("");
+        unit1Label.setText("");
+        unit2Label.setText("");
+        unit3Label.setText("");
+        unit4Label.setText("");
+        unit5Label.setText("");
     }
 }
