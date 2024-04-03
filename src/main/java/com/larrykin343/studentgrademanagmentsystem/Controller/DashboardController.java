@@ -59,6 +59,10 @@ public class DashboardController implements Initializable {
     private TreeItem<String> studentBranchItem;
     private TreeItem<String> coursesBranchItem2;
 
+    DatabaseConn connectNow = new DatabaseConn();//Creating an instance of the DatabaseConn class
+    Connection connectDB = connectNow.getConnection(); //this is the connection to the database
+
+
     //?Method to change the text of the button
     public void changeButtonText(String newText) {
         studentInfoSaveButton.setText(newText);
@@ -671,6 +675,7 @@ public class DashboardController implements Initializable {
                     failureAlert.setContentText("Failed to update grade. Please try again.");
                     failureAlert.showAndWait();
                 }
+                storeStudentResults();
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 ex.getCause();
@@ -702,5 +707,79 @@ public class DashboardController implements Initializable {
         unit3Label.setText("");
         unit4Label.setText("");
         unit5Label.setText("");
+    }
+
+
+    //method to store student results
+    public void storeStudentResults() {
+        String reg = regNoTextField.getText();
+        String year = yearTextField.getText();
+        String[] unitCodes = {unit1Label.getText(), unit2Label.getText(), unit3Label.getText(), unit4Label.getText(), unit5Label.getText()};
+        String[] marks = {unit1MarksField.getText(), unit2MarksField.getText(), unit3MarksField.getText(), unit4MarksField.getText(), unit5MarksField.getText()};
+        String Grade = finalGrade.getText();
+        try {
+            // Retrieve email for the given registration number (reg)
+            String emailQuery = "SELECT email FROM students WHERE reg = ?";
+            PreparedStatement emailStatement = connectDB.prepareStatement(emailQuery);
+            emailStatement.setString(1, reg);
+            ResultSet emailResult = emailStatement.executeQuery();
+
+            String email = null;
+            if (emailResult.next()) {
+                email = emailResult.getString("email");
+            } else {
+                //creating an alert
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Student not found");
+                alert.setContentText("Student with registration number " + reg + " not found.");
+                alert.showAndWait();
+                return;
+            }
+
+            // Insert student results into the database
+            String insertQuery = "INSERT INTO students_results " +
+                    "(reg, email, year, " +
+                    "unit1Code, unit1Marks, " +
+                    "unit2Code, unit2Marks, " +
+                    "unit3Code, unit3Marks, " +
+                    "unit4Code, unit4Marks, " +
+                    "unit5Code, unit5Marks, " +
+                    "finalGrade) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement insertStatement = connectDB.prepareStatement(insertQuery);
+            insertStatement.setString(1, reg);
+            insertStatement.setString(2, email);
+            insertStatement.setString(3, year);
+            for (int i = 0; i < 5; i++) {
+                insertStatement.setString(2 * i + 4, unitCodes[i]);
+                insertStatement.setString(2 * i + 5, marks[i]);
+            }
+            insertStatement.setString(14, Grade);
+
+            int rowsAffected = insertStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Success");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("Student results stored successfully.");
+                successAlert.showAndWait();
+
+               //timings to close the alert
+                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> successAlert.close()));
+                timeline.setCycleCount(1);
+                timeline.play();
+
+                successAlert.showAndWait();
+            } else {
+                Alert failureAlert = new Alert(Alert.AlertType.ERROR);
+                failureAlert.setTitle("Error");
+                failureAlert.setHeaderText(null);
+                failureAlert.setContentText("Failed to store student results. Please try again.");
+                failureAlert.showAndWait();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
