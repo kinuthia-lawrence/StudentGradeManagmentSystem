@@ -606,6 +606,7 @@ public class DashboardController implements Initializable {
             alert.setHeaderText("Course code and year required");
             alert.setContentText("Please enter the course code and year to retrieve course details.");
             alert.showAndWait();
+            clearFields(null);
         }
     }
 
@@ -675,14 +676,12 @@ public class DashboardController implements Initializable {
                 ex.getCause();
             }
             clearFields(null);
-
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("All fields required");
             alert.setContentText("Please enter marks for all units and the registration number.");
             alert.showAndWait();
-            clearFields(null);
         }
     }
 

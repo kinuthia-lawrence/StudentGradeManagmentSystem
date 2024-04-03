@@ -160,12 +160,12 @@
                   <TextField fx:id="regNoTextField" layoutX="10.0" layoutY="43.0" promptText="EB1/61273/22" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label alignment="CENTER" layoutX="10.0" layoutY="17.0" prefHeight="17.0" prefWidth="98.0" text="Year" GridPane.columnIndex="1" />
                   <TextField fx:id="yearTextField" layoutX="10.0" layoutY="43.0" promptText="Y2S2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label alignment="CENTER" layoutX="10.0" layoutY="17.0" prefHeight="17.0" prefWidth="98.0" text="Reg. No." GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label fx:id="unit1Label" layoutX="110.0" layoutY="132.0" prefHeight="27.0" prefWidth="100.0" text="COSC 223" GridPane.rowIndex="5" />
-                  <Label fx:id="unit2Label" layoutX="10.0" layoutY="162.0" prefHeight="27.0" prefWidth="100.0" text="COSC 224" GridPane.rowIndex="6" />
-                  <Label fx:id="unit3Label" prefHeight="27.0" prefWidth="100.0" text="COSC 225" GridPane.rowIndex="7" />
-                  <Label fx:id="unit4Label" prefHeight="27.0" prefWidth="100.0" text="COSC 226" GridPane.rowIndex="8" />
-                  <Label fx:id="unit5Label" prefHeight="27.0" prefWidth="100.0" text="COSC 227" GridPane.rowIndex="9" />
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="17.0" prefHeiggtht="17.0" prefWidth="98.0" text="Reg. No." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="unit1Label" layoutX="110.0" layoutY="132.0" prefHeight="27.0" prefWidth="100.0" GridPane.rowIndex="5" />
+                  <Label fx:id="unit2Label" layoutX="10.0" layoutY="162.0" prefHeight="27.0" prefWidth="100.0" GridPane.rowIndex="6" />
+                  <Label fx:id="unit3Label" prefHeight="27.0" prefWidth="100.0" GridPane.rowIndex="7" />
+                  <Label fx:id="unit4Label" prefHeight="27.0" prefWidth="100.0" GridPane.rowIndex="8" />
+                  <Label fx:id="unit5Label" prefHeight="27.0" prefWidth="100.0" GridPane.rowIndex="9" />
                   <Button fx:id="getUnitButton" contentDisplay="CENTER" layoutX="110.0" layoutY="313.0" mnemonicParsing="false" onAction="#getCourseDetails" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #ff7f5a;" text="Get Units" textFill="#f5efef" GridPane.rowIndex="2" />
                   <Button fx:id="cancelCalculate" contentDisplay="CENTER" layoutX="10.0" layoutY="73.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: #ff7f5a;" text="Cancel" textFill="#f5efef" visible="false" GridPane.rowIndex="10" />
                    </GridPane>
