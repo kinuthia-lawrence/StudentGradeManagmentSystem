@@ -611,76 +611,78 @@ public class DashboardController implements Initializable {
 
 
     public void calculateGrade(ActionEvent event) {
-        if(!unit1MarksField.getText().isBlank() && !unit2MarksField.getText().isBlank() && !unit3MarksField.getText().isBlank() && !unit4MarksField.getText().isBlank() && !unit5MarksField.getText().isBlank() && !regNoTextField.getText().isBlank()){
+        if (!unit1MarksField.getText().isBlank() && !unit2MarksField.getText().isBlank() && !unit3MarksField.getText().isBlank() && !unit4MarksField.getText().isBlank() && !unit5MarksField.getText().isBlank() && !regNoTextField.getText().isBlank()) {
 
-        double unit1Marks = Double.parseDouble(unit1MarksField.getText());
-        double unit2Marks = Double.parseDouble(unit2MarksField.getText());
-        double unit3Marks = Double.parseDouble(unit3MarksField.getText());
-        double unit4Marks = Double.parseDouble(unit4MarksField.getText());
-        double unit5Marks = Double.parseDouble(unit5MarksField.getText());
+            double unit1Marks = Double.parseDouble(unit1MarksField.getText());
+            double unit2Marks = Double.parseDouble(unit2MarksField.getText());
+            double unit3Marks = Double.parseDouble(unit3MarksField.getText());
+            double unit4Marks = Double.parseDouble(unit4MarksField.getText());
+            double unit5Marks = Double.parseDouble(unit5MarksField.getText());
 
-        double average = (unit1Marks + unit2Marks + unit3Marks + unit4Marks + unit5Marks) / 5;
+            double average = (unit1Marks + unit2Marks + unit3Marks + unit4Marks + unit5Marks) / 5;
 
-        String grade;
-        if (average >= 70) {
-            grade = "A";
-        } else if (average >= 60) {
-            grade = "B";
-        } else if (average >= 50) {
-            grade = "C";
-        } else if (average >= 40) {
-            grade = "D";
-        } else {
-            grade = "F";
-        }
-
-        finalGrade.setText(grade);
-
-
-        String regNo = regNoTextField.getText();
-        DatabaseConn connectNow = new DatabaseConn();
-        Connection connectDB = connectNow.getConnection();
-
-        String updateQuery = "UPDATE students SET grade = ? WHERE reg = ?";
-        try {
-            PreparedStatement preparedStatement = connectDB.prepareStatement(updateQuery);
-            preparedStatement.setString(1, grade);
-            preparedStatement.setString(2, regNo);
-
-            int rowsAffected = preparedStatement.executeUpdate();
-            if (rowsAffected > 0) {
-                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                successAlert.setTitle("Success");
-                successAlert.setHeaderText(null);
-                successAlert.setContentText("Grade updated successfully");
-                successAlert.showAndWait();
-
-                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> successAlert.close()));
-                timeline.setCycleCount(1);
-                timeline.play();
-
-                successAlert.showAndWait();
-                //? Update the list view and tree view after updating the grade
-                updateStudentList();
-                updateTreeView();
+            String grade;
+            if (average >= 70) {
+                grade = "A";
+            } else if (average >= 60) {
+                grade = "B";
+            } else if (average >= 50) {
+                grade = "C";
+            } else if (average >= 40) {
+                grade = "D";
             } else {
-                Alert failureAlert = new Alert(Alert.AlertType.ERROR);
-                failureAlert.setTitle("Error");
-                failureAlert.setHeaderText(null);
-                failureAlert.setContentText("Failed to update grade. Please try again.");
-                failureAlert.showAndWait();
+                grade = "F";
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            ex.getCause();
-        }
 
-        }else {
+            finalGrade.setText(grade);
+
+
+            String regNo = regNoTextField.getText();
+            DatabaseConn connectNow = new DatabaseConn();
+            Connection connectDB = connectNow.getConnection();
+
+            String updateQuery = "UPDATE students SET grade = ? WHERE reg = ?";
+            try {
+                PreparedStatement preparedStatement = connectDB.prepareStatement(updateQuery);
+                preparedStatement.setString(1, grade);
+                preparedStatement.setString(2, regNo);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+                if (rowsAffected > 0) {
+                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                    successAlert.setTitle("Success");
+                    successAlert.setHeaderText(null);
+                    successAlert.setContentText("Grade updated successfully");
+                    successAlert.showAndWait();
+
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> successAlert.close()));
+                    timeline.setCycleCount(1);
+                    timeline.play();
+
+                    successAlert.showAndWait();
+                    //? Update the list view and tree view after updating the grade
+                    updateStudentList();
+                    updateTreeView();
+                } else {
+                    Alert failureAlert = new Alert(Alert.AlertType.ERROR);
+                    failureAlert.setTitle("Error");
+                    failureAlert.setHeaderText(null);
+                    failureAlert.setContentText("Failed to update grade. Please try again.");
+                    failureAlert.showAndWait();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                ex.getCause();
+            }
+            clearFields(null);
+
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("All fields required");
             alert.setContentText("Please enter marks for all units and the registration number.");
             alert.showAndWait();
+            clearFields(null);
         }
     }
 
