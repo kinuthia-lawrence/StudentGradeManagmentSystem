@@ -29,7 +29,6 @@ public class DashboardController implements Initializable {
 
     public Button studentInfoSaveButton;
     public Button studentInfoCancelButton;
-
     public TextField studentInfoRegNoTextField;
     public TextField studentInfoNameTextField;
     public TextField studentInfoIdTextField;
@@ -40,19 +39,20 @@ public class DashboardController implements Initializable {
     public boolean isUpdateStudent = false;
     public boolean isDeleteStudent = false;
     public TextField course1MarksField;
-   
     public Button calculateButton;
     public Label finalGrade;
-    public TextField course1TextField;
     public TextField course3MarksField;
     public TextField course4MarksField;
     public TextField course5MarksField;
-    public TextField course2TextField;
     public TextField course2MarksField;
-    public TextField course3TextField;
-    public TextField course4TextField;
-    public TextField course5TextField;
     public TextField regNoTextField;
+    public TextField courseCode;
+    public TextField yearTextField;
+    public Label unit1Label;
+    public Label unit2Label;
+    public Label unit3Label;
+    public Label unit4Label;
+    public Label unit5Label;
 
     private TreeItem<String> branchItem;
 
