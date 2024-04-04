@@ -52,6 +52,10 @@ public class GradeReportController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        showResultsTableView(null);
+    }
+
+    public void showResultsTableView(ActionEvent event) {
         try {
             Statement stmt = connectDB.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT id, reg, email, finalGrade FROM students_results");
@@ -76,7 +80,7 @@ public class GradeReportController implements Initializable {
                 gradeTableView.getItems().add(rowData);
             }
 
-            connectDB.close();
+//            connectDB.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
