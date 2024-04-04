@@ -17,6 +17,8 @@ module com.larrykin.studentgrademanagmentsystem {
     requires mysql.connector.j;
 
 
+    opens com.larrykin343.studentgrademanagmentsystem.Controller to javafx.fxml;
+
     opens com.larrykin343.studentgrademanagmentsystem to javafx.fxml;
     exports com.larrykin343.studentgrademanagmentsystem;
     exports com.larrykin343.studentgrademanagmentsystem.Controller;

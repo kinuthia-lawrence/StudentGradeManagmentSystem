@@ -11,46 +11,36 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.larrykin343.studentgrademanagmentsystem.Controller.GradeReportController">
-    <Label alignment="CENTER" layoutY="14.0" prefHeight="43.0" prefWidth="600.0" text="Grade Report"
-           AnchorPane.bottomAnchor="352.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-           AnchorPane.topAnchor="5.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.larrykin343.studentgrademanagmentsystem.Controller.GradeReportController">
+    <Label alignment="CENTER" layoutY="14.0" prefHeight="43.0" prefWidth="600.0" text="Grade Report" AnchorPane.bottomAnchor="352.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
         <font>
-            <Font name="Segoe Print" size="18.0"/>
+            <Font name="Segoe Print" size="18.0" />
         </font>
     </Label>
-    <Button onAction="#exportResults" layoutX="495.0" layoutY="361.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="90.0"
-            style="-fx-background-color: #ff7f5a;" text="Export" textFill="#ebe7e7" AnchorPane.bottomAnchor="5.0"
-            AnchorPane.leftAnchor="495.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="361.0"/>
-    <Button fx:id="closeGradeReportButton" onAction="#closeWindow" layoutX="380.0" layoutY="361.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="90.0"
-            style="-fx-background-color: #ff7f5a;" text="Close" textFill="#ebe7e7" AnchorPane.bottomAnchor="5.0"
-            AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="361.0"/>
-    <SplitPane dividerPositions="0.2922077922077922" layoutX="2.0" layoutY="29.0" orientation="VERTICAL"
-               prefHeight="310.0" prefWidth="600.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0"
-               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="97.0" prefWidth="598.0">
-            <TableView layoutX="41.0" layoutY="6.0" prefHeight="78.0" prefWidth="464.0">
+    <Button layoutX="495.0" layoutY="361.0" mnemonicParsing="false" onAction="#exportResults" prefHeight="34.0" prefWidth="90.0" style="-fx-background-color: #ff7f5a;" text="Export" textFill="#ebe7e7" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="495.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="361.0" />
+    <Button fx:id="closeGradeReportButton" layoutX="380.0" layoutY="361.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="34.0" prefWidth="90.0" style="-fx-background-color: #ff7f5a;" text="Close" textFill="#ebe7e7" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="361.0" />
+    <SplitPane dividerPositions="0.2922077922077922" layoutX="2.0" layoutY="29.0" orientation="VERTICAL" prefHeight="310.0" prefWidth="600.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="598.0">
+            <TableView fx:id="gradeTableView" editable="true" layoutX="35.0" layoutY="5.0" prefHeight="140.0" prefWidth="464.0">
                 <columns>
-                    <TableColumn prefWidth="75.0" text="Studnet"/>
-                    <TableColumn prefWidth="75.0" text="Course"/>
-                    <TableColumn prefWidth="75.0" text="Grade"/>
+                    <TableColumn fx:id="idColumn" prefWidth="75.0" text="id" />
+                    <TableColumn fx:id="regColumn" prefWidth="75.0" text="Reg" />
+                    <TableColumn fx:id="emailColumn" prefWidth="75.0" text="Email" />
+                    <TableColumn fx:id="gradeColumn" prefWidth="75.0" text="Grade" />
                 </columns>
             </TableView>
         </AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="156.0" prefWidth="598.0"
-                    style="-fx-background-color: #d3d3d3;">
-            <BarChart layoutX="69.0" layoutY="11.0" prefHeight="182.0" prefWidth="368.0">
-                <xAxis>
-                    <CategoryAxis side="BOTTOM"/>
-                </xAxis>
-                <yAxis>
-                    <NumberAxis side="LEFT"/>
-                </yAxis>
-            </BarChart>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="156.0" prefWidth="598.0" style="-fx-background-color: #d3d3d3;">
+            <children>
+                <BarChart layoutX="69.0" layoutY="50.0" prefHeight="80.0" prefWidth="368.0">
+                    <xAxis>
+                        <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT" />
+                    </yAxis>
+                </BarChart>
+            </children>
         </AnchorPane>
     </SplitPane>
 </AnchorPane>
