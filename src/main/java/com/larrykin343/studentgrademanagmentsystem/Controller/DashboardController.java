@@ -843,7 +843,7 @@ public class DashboardController implements Initializable {
             double lecturesMissed = Double.parseDouble(lecturesMissedStr);
 
             // Calculate attendance percentage
-            double attendance = ((totalLecture - lecturesMissed) / totalLecture) * 100;
+            double attendance = Math.round(((totalLecture - lecturesMissed) / totalLecture) * 100);
 
             // Update attendance in the database
             updateAttendance(reg, attendance);
@@ -874,6 +874,13 @@ public class DashboardController implements Initializable {
             statement.setDouble(1, attendance);
             statement.setString(2, reg);
             statement.executeUpdate();
+
+            attendanceRegTextField.clear();
+            attendanceTotalLecture.clear();
+            attendanceLecturesMissed.clear();
+            //update the list view and tree view
+            updateStudentList();
+            updateTreeView();
         } catch (SQLException e) {
             e.printStackTrace();
         }
