@@ -16,13 +16,14 @@ public class EmailSender {
     DatabaseConn connectNow = new DatabaseConn();//Creating an instance of the DatabaseConn class
     Connection connectDB = connectNow.getConnection(); //this is the connection to the database
 
-    private static final String SMTP_HOST = "smtp.gmail.com";
-    private static final String SMTP_PORT = "465";
-    private static final String EMAIL_USERNAME = "kinuthialawrence343@gmail.com";
-    private static final String EMAIL_PASSWORD = "jlan vjur jayj jsoy"; // Use the app-specific password
+    private static final String SMTP_HOST = Credentials.getSmtpHost();
+    private static final String SMTP_PORT = Credentials.getSmtpPort();
+    private static final String EMAIL_USERNAME = Credentials.getEmailUsername();
+    private static final String EMAIL_PASSWORD = Credentials.getEmailPassword();
+
 
     public void sendStudentResultsByEmail() {
-        try{
+        try {
             String query = "SELECT * FROM students_results";
             PreparedStatement statement = connectDB.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
@@ -51,7 +52,7 @@ public class EmailSender {
 
                 // Compose email content
                 String subject = "Your Semester Results for Year " + year;
-                String body = "Dear Student, "+name+", "+reg+"\n\n"
+                String body = "Dear Student, " + name + ", " + reg + "\n\n"
                         + "Here are your semester results:\n\n"
                         + "Unit Codes: " + String.join(", ", unitCodes) + "\n"
                         + "Marks: " + String.join(", ", Arrays.stream(marks).mapToObj(String::valueOf).toArray(String[]::new)) + "\n"

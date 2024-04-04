@@ -6,7 +6,7 @@ import javafx.event.ActionEvent;
 public class GradeReportController {
 
 
-    public void exportResulsts(ActionEvent event) {
+    public void exportResults(ActionEvent actionEvent) {
         EmailSender emailSender = new EmailSender();
         emailSender.sendStudentResultsByEmail();
     }
