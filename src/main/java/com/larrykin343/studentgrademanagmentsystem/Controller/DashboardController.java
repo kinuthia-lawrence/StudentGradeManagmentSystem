@@ -55,6 +55,11 @@ public class DashboardController implements Initializable {
     public Label unit5Label;
     public Button cancelCalculate;
     public Button getUnitButton;
+    @FXML
+    public TextField attendanceTotalLecture;
+    public TextField attendanceLecturesMissed;
+    public TextField attendanceRegTextField;
+    public Button attendanceSubmitButton;
 
     private TreeItem<String> studentBranchItem;
     private TreeItem<String> coursesBranchItem2;
@@ -814,4 +819,77 @@ public class DashboardController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    //! Method to handle the attendance submission
+    public void handleAttendanceSubmit() {
+        String reg = attendanceRegTextField.getText().trim().toUpperCase();
+        String totalLectureStr = attendanceTotalLecture.getText().trim();
+        String lecturesMissedStr = attendanceLecturesMissed.getText().trim();
+
+        // Check if any field is empty
+        if (reg.isEmpty() || totalLectureStr.isEmpty() || lecturesMissedStr.isEmpty()) {
+            showAlert("Error", "All fields are required.");
+            return;
+        }
+
+        // Check if the student exists
+        if (!studentExists(reg)) {
+            showAlert("Error", "Student with registration number " + reg + " does not exist.");
+            return;
+        }
+
+        try {
+            double totalLecture = Double.parseDouble(totalLectureStr);
+            double lecturesMissed = Double.parseDouble(lecturesMissedStr);
+
+            // Calculate attendance percentage
+            double attendance = ((totalLecture - lecturesMissed) / totalLecture) * 100;
+
+            // Update attendance in the database
+            updateAttendance(reg, attendance);
+
+            showAlert("Success", "Attendance updated successfully.");
+        } catch (NumberFormatException e) {
+            showAlert("Error", "Invalid input. Please enter valid numbers for total lecture and lectures missed.");
+        }
+    }
+
+    private boolean studentExists(String reg) {
+        try {
+            String query = "SELECT * FROM students WHERE reg = ?";
+            PreparedStatement statement = connectDB.prepareStatement(query);
+            statement.setString(1, reg);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next(); // true if student exists, false otherwise
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Assume student doesn't exist in case of SQL error
+        }
+    }
+
+    private void updateAttendance(String reg, double attendance) {
+        try {
+            String query = "UPDATE students SET attendance = ? WHERE reg = ?";
+            PreparedStatement statement = connectDB.prepareStatement(query);
+            statement.setDouble(1, attendance);
+            statement.setString(2, reg);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+
+        //timings to close the alert
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> alert.close()));
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
+
 }

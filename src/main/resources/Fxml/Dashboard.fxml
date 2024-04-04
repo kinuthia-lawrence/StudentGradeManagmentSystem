@@ -193,6 +193,13 @@
                    </GridPane>
                    <Button layoutX="145.0" layoutY="144.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" style="-fx-background-color: #ff7f5a;" text="Mark" textFill="#f5ecec" />
                    <Button layoutX="14.0" layoutY="144.0" mnemonicParsing="false" style="-fx-background-color: #ff7f5a;" text="Unmark" textFill="#f5ecec" />
+               <TextField fx:id="attendanceTotalLecture" layoutX="164.0" layoutY="315.0" />
+               <TextField fx:id="attendanceLecturesMissed" layoutX="164.0" layoutY="264.0" />
+               <Button onAction="#handleAttendanceSubmit" fx:id="attendanceSubmitButton" layoutX="131.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" style="-fx-background-color: #ff7f5a;" text="Submit" textFill="#f5ecec" />
+               <TextField  fx:id="attendanceRegTextField" layoutX="164.0" layoutY="222.0" />
+               <Label layoutX="51.0" layoutY="226.0" text="Reg No." />
+               <Label layoutX="51.0" layoutY="268.0" text="Lectures Missed" />
+               <Label layoutX="51.0" layoutY="319.0" text="Total Lectures" />
                </AnchorPane>
            </Tab>
        </TabPane>
