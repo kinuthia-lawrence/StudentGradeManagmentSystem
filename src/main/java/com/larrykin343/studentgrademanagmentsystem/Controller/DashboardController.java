@@ -265,6 +265,38 @@ public class DashboardController implements Initializable {
                 studentInfoEmailTextField.clear();
                 studentInfoIdTextField.clear();
             }
+        }else if(isUpdateStudent){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Cancel update student");
+            alert.setHeaderText("Are you sure you want to cancel update student: ");
+            alert.setContentText("Press OK to confirm, or Cancel to go back.");
+
+            if (alert.showAndWait().get().getText().equals("OK")) {
+                studentInfoSaveButton.setVisible(false);
+                studentInfoCancelButton.setVisible(false);
+                studentInfoLabel.setText("");
+                studentInfoRegNoTextField.clear();
+                studentInfoNameTextField.clear();
+                studentInfoEmailTextField.clear();
+                studentInfoIdTextField.clear();
+            }
+
+        }else if(isDeleteStudent){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Cancel Delete student");
+            alert.setHeaderText("Are you sure you want to cancel Delete student: ");
+            alert.setContentText("Press OK to confirm, or Cancel to go back.");
+
+            if (alert.showAndWait().get().getText().equals("OK")) {
+                studentInfoSaveButton.setVisible(false);
+                studentInfoCancelButton.setVisible(false);
+                studentInfoLabel.setText("");
+                studentInfoRegNoTextField.clear();
+                studentInfoNameTextField.clear();
+                studentInfoEmailTextField.clear();
+                studentInfoIdTextField.clear();
+            }
+
         }
     }
 
