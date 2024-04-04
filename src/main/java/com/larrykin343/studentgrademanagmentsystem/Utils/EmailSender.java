@@ -34,7 +34,7 @@ public class EmailSender {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String reg = resultSet.getString("reg");
+                String reg = resultSet.getString("reg").toUpperCase();
                 String email = resultSet.getString("email");
                 String year = resultSet.getString("year");
 
