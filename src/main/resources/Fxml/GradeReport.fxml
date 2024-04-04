@@ -26,7 +26,7 @@
                     <TableColumn fx:id="gradeColumn" prefWidth="50.0" text="Grade" />
                 </columns>
             </TableView>
-         <Button onAction="#showResultsTableView" layoutX="413.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="75.0" style="-fx-background-color: ff7f5a;" text="Refresh" textFill="#fff9f9" />
+         <Button layoutX="413.0" layoutY="14.0" mnemonicParsing="false" onAction="#showResultsTableView" prefHeight="34.0" prefWidth="75.0" style="-fx-background-color: ff7f5a;" text="Refresh" textFill="#fff9f9" />
         </AnchorPane>
     </SplitPane>
 </AnchorPane>

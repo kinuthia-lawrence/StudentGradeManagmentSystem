@@ -73,7 +73,7 @@ public class EmailSender {
                 alert.showAndWait();
 
                 //set timeline for alert
-                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> alert.hide()));
+                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.10), evt -> alert.hide()));
                 timeline.setCycleCount(1);
                 timeline.play();
 
