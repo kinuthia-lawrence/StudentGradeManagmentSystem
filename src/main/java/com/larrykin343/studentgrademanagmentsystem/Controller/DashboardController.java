@@ -102,8 +102,9 @@ public class DashboardController implements Initializable {
                 String studentName = resultSet.getString("name");
                 String studentId = resultSet.getString("student_id");
                 String email = resultSet.getString("email");
+                String attendance = resultSet.getString("attendance");
 
-                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName + "  " + studentId + "  " + email;
+                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName + "  " + studentId + "  " + email + "  " + attendance;
                 dashboardListView.getItems().add(studentListOutput);
             }
         } catch (Exception e) {
@@ -122,7 +123,8 @@ public class DashboardController implements Initializable {
                 String studentReg = resultSet.getString("reg");
                 String studentName = resultSet.getString("name");
                 String studentGrade = resultSet.getString("grade");
-                TreeItem<String> studentItem = new TreeItem<>(studentID + "." + studentReg + " " + studentName + " " + studentGrade);
+                String studentAttendance = resultSet.getString("attendance");
+                TreeItem<String> studentItem = new TreeItem<>(studentID + "." + studentReg + " " + studentName + " " + studentGrade + " " + studentAttendance);
                 studentBranchItem.getChildren().add(studentItem); // Add each student as a child to branchItem
             }
         } catch (SQLException ex) {
@@ -377,8 +379,9 @@ public class DashboardController implements Initializable {
                 String studentName = resultSet.getString("name");
                 String studentId = resultSet.getString("student_id");
                 String email = resultSet.getString("email");
+                String attendance = resultSet.getString("attendance");
 
-                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName + "  " + studentId + "  " + email;
+                String studentListOutput = studentID + ".    " + studentReg + "  " + studentName + "  " + studentId + "  " + email + "  " + attendance;
                 dashboardListView.getItems().add(studentListOutput);
             }
         } catch (Exception e) {
@@ -407,7 +410,8 @@ public class DashboardController implements Initializable {
                 String studentReg = resultSet.getString("reg");
                 String studentName = resultSet.getString("name");
                 String studentGrade = resultSet.getString("grade");
-                TreeItem<String> studentItem = new TreeItem<>(studentID + "." + studentReg + " " + studentName + " " + studentGrade);
+                String studentAttendance = resultSet.getString("attendance");
+                TreeItem<String> studentItem = new TreeItem<>(studentID + "." + studentReg + " " + studentName + " " + studentGrade + " " + studentAttendance);
                 studentBranchItem.getChildren().add(studentItem); // Add each student as a child to branchItem
             }
         } catch (SQLException ex) {
@@ -550,7 +554,6 @@ public class DashboardController implements Initializable {
 
 //                    Statement resetStatement = connectDB.createStatement();
 //                    resetStatement.executeUpdate(resetAutoIncrementQuery);
-
 
                     if (rowsAffected > 0) {
                         // Student deleted successfully
