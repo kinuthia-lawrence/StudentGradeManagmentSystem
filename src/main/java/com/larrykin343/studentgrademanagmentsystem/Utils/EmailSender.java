@@ -1,5 +1,10 @@
 package com.larrykin343.studentgrademanagmentsystem.Utils;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.control.Alert;
+import javafx.util.Duration;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.mail.Authenticator;
@@ -32,7 +37,6 @@ public class EmailSender {
                 String reg = resultSet.getString("reg");
                 String email = resultSet.getString("email");
                 String year = resultSet.getString("year");
-                String name = resultSet.getString("name").toUpperCase();
 
                 String[] unitCodes = {
                         resultSet.getString("unit1Code"),
@@ -52,7 +56,7 @@ public class EmailSender {
 
                 // Compose email content
                 String subject = "Your Semester Results for Year " + year;
-                String body = "Dear Student, " + name + ", " + reg + "\n\n"
+                String body = "Dear Student, " + reg + "\n\n"
                         + "Here are your semester results:\n\n"
                         + "Unit Codes: " + String.join(", ", unitCodes) + "\n"
                         + "Marks: " + String.join(", ", Arrays.stream(marks).mapToObj(String::valueOf).toArray(String[]::new)) + "\n"
@@ -62,6 +66,17 @@ public class EmailSender {
 
                 // Send email
                 sendEmail(email, subject, body);
+
+                Alert alert= new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Email Sent");
+                alert.setHeaderText("Email Sent Successfully");
+                alert.showAndWait();
+
+                //set timeline for alert
+                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> alert.hide()));
+                timeline.setCycleCount(1);
+                timeline.play();
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
