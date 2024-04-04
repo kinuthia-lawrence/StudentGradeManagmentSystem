@@ -38,5 +38,5 @@ build/
 .DS_Store
 .idea/copilot/chatSessions/xd.lck
 ### adding credentials class ###
-src/main/java/com/larrykin343/studentgrademanagmentsystem/Utils/Credentials.java
+#src/main/java/com/larrykin343/studentgrademanagmentsystem/Utils/Credentials.java
 
