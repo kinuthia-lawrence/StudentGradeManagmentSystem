@@ -13,6 +13,7 @@ module com.larrykin.studentgrademanagmentsystem {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires mysql.connector.j;
+    requires jakarta.mail;
 
 
     opens com.larrykin343.studentgrademanagmentsystem to javafx.fxml;

@@ -23,7 +23,7 @@
             <Font name="Segoe Print" size="18.0"/>
         </font>
     </Label>
-    <Button layoutX="495.0" layoutY="361.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="90.0"
+    <Button onAction="#exportResulsts" layoutX="495.0" layoutY="361.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="90.0"
             style="-fx-background-color: #ff7f5a;" text="Export" textFill="#ebe7e7" AnchorPane.bottomAnchor="5.0"
             AnchorPane.leftAnchor="495.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="361.0"/>
     <Button layoutX="380.0" layoutY="361.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="90.0"
