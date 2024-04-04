@@ -12,8 +12,9 @@ module com.larrykin.studentgrademanagmentsystem {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
-    requires mysql.connector.j;
+
     requires jakarta.mail;
+    requires mysql.connector.j;
 
 
     opens com.larrykin343.studentgrademanagmentsystem to javafx.fxml;
